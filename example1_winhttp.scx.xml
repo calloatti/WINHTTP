@@ -1,0 +1,342 @@
+<?xml version = "1.0" encoding="UTF-8" standalone="yes"?>
+<VFPData>
+	<record>
+		<platform>COMMENT</platform>
+		<uniqueid>Screen</uniqueid>
+		<timestamp>0</timestamp>
+		<class/>
+		<classloc/>
+		<baseclass/>
+		<objname/>
+		<parent/>
+		<properties/>
+		<protected/>
+		<methods/>
+		<objcode/>
+		<ole/>
+		<ole2/>
+		<reserved1>VERSION =   3.00</reserved1>
+		<reserved2/>
+		<reserved3/>
+		<reserved4/>
+		<reserved5/>
+		<reserved6/>
+		<reserved7/>
+		<reserved8/>
+		<user/>
+	</record>
+	<record>
+		<platform>WINDOWS</platform>
+		<uniqueid>_4EQ0WP9WK</uniqueid>
+		<timestamp>1190951406</timestamp>
+		<class>dataenvironment</class>
+		<classloc/>
+		<baseclass>dataenvironment</baseclass>
+		<objname>Dataenvironment</objname>
+		<parent/>
+		<properties>Top = 0
+Left = 0
+Width = 0
+Height = 0
+DataSource = .NULL.
+Name = "Dataenvironment"
+</properties>
+		<protected/>
+		<methods/>
+		<objcode/>
+		<ole/>
+		<ole2/>
+		<reserved1/>
+		<reserved2>1</reserved2>
+		<reserved3/>
+		<reserved4>1</reserved4>
+		<reserved5/>
+		<reserved6/>
+		<reserved7/>
+		<reserved8/>
+		<user/>
+	</record>
+	<record>
+		<platform>WINDOWS</platform>
+		<uniqueid>_4EQ0WP9WL</uniqueid>
+		<timestamp>1190962368</timestamp>
+		<class>form</class>
+		<classloc/>
+		<baseclass>form</baseclass>
+		<objname>_form1</objname>
+		<parent/>
+		<properties>Height = 599
+Width = 984
+DoCreate = .T.
+AutoCenter = .T.
+Caption = "Form"
+AllowOutput = .F.
+Name = "_form1"
+</properties>
+		<protected/>
+		<methods/>
+		<objcode/>
+		<ole/>
+		<ole2/>
+		<reserved1/>
+		<reserved2/>
+		<reserved3/>
+		<reserved4/>
+		<reserved5/>
+		<reserved6/>
+		<reserved7/>
+		<reserved8/>
+		<user/>
+	</record>
+	<record>
+		<platform>WINDOWS</platform>
+		<uniqueid>_4EQ0WP9WN</uniqueid>
+		<timestamp>1190956440</timestamp>
+		<class>image</class>
+		<classloc/>
+		<baseclass>image</baseclass>
+		<objname>Image1</objname>
+		<parent>_form1</parent>
+		<properties>Stretch = 1
+Height = 540
+Left = 12
+Top = 12
+Width = 960
+Name = "Image1"
+</properties>
+		<protected/>
+		<methods/>
+		<objcode/>
+		<ole/>
+		<ole2/>
+		<reserved1/>
+		<reserved2/>
+		<reserved3/>
+		<reserved4/>
+		<reserved5/>
+		<reserved6/>
+		<reserved7/>
+		<reserved8/>
+		<user/>
+	</record>
+	<record>
+		<platform>WINDOWS</platform>
+		<uniqueid>_4EQ0WP9WK</uniqueid>
+		<timestamp>1190962368</timestamp>
+		<class>winhttp</class>
+		<classloc>winhttp.vcx</classloc>
+		<baseclass>custom</baseclass>
+		<objname>Winhttp1</objname>
+		<parent>_form1</parent>
+		<properties>Top = 564
+Left = 672
+Name = "Winhttp1"
+</properties>
+		<protected/>
+		<methods/>
+		<objcode/>
+		<ole/>
+		<ole2/>
+		<reserved1/>
+		<reserved2/>
+		<reserved3/>
+		<reserved4/>
+		<reserved5/>
+		<reserved6/>
+		<reserved7/>
+		<reserved8/>
+		<user/>
+	</record>
+	<record>
+		<platform>WINDOWS</platform>
+		<uniqueid>_4EQ0WP9WK</uniqueid>
+		<timestamp>1190957870</timestamp>
+		<class>commandbutton</class>
+		<classloc/>
+		<baseclass>commandbutton</baseclass>
+		<objname>Command1</objname>
+		<parent>_form1</parent>
+		<properties>Top = 564
+Left = 876
+Height = 27
+Width = 96
+Caption = "Async=FALSE"
+Name = "Command1"
+</properties>
+		<protected/>
+		<methods>PROCEDURE Click
+Local lcbytes, lcheaders, lcurl, lnp, lnrange, lnsize, lnx1, lnx2
+
+Thisform.image1.PictureVal = ''
+
+DoEvents
+
+m.lcurl = 'http://www.mrwallpaper.com/wallpapers/temple-top-of-mountain-1920x1080.jpg'
+
+Thisform.winhttp1.Open('HEAD', m.lcurl)
+
+Thisform.winhttp1.Send()
+
+m.lnsize = Val(Thisform.winhttp1.GetResponseHeader('Content-Length'))
+
+m.lnrange = (32 * 1024) - 1
+
+m.lnx1 = 0
+m.lnx2 = m.lnx1 + m.lnrange
+
+m.lcbytes	= ''
+m.lcheaders	= ''
+
+Do While m.lnx1 &lt; m.lnsize
+
+	Thisform.winhttp1.Open('GET', m.lcurl)
+	Thisform.winhttp1.setrequestheader('Range', 'bytes=' + Transform(m.lnx1) + '-' + Transform(m.lnx2))
+	Thisform.winhttp1.Send()
+
+	m.lcbytes	= m.lcbytes + Thisform.winhttp1.responsebody
+	m.lcheaders	= m.lcheaders + Thisform.winhttp1.getallresponseheaders()
+
+	Thisform.image1.PictureVal = m.lcbytes
+
+	DoEvents
+
+	m.lnx1 = m.lnx2 + 1
+	m.lnx2 = m.lnx1 + m.lnrange
+
+Enddo
+
+Thisform.image1.PictureVal = m.lcbytes
+
+
+ENDPROC
+</methods>
+		<objcode/>
+		<ole/>
+		<ole2/>
+		<reserved1/>
+		<reserved2/>
+		<reserved3/>
+		<reserved4/>
+		<reserved5/>
+		<reserved6/>
+		<reserved7/>
+		<reserved8/>
+		<user/>
+	</record>
+	<record>
+		<platform>WINDOWS</platform>
+		<uniqueid>_4EQ12RRZ6</uniqueid>
+		<timestamp>1190957349</timestamp>
+		<class>commandbutton</class>
+		<classloc/>
+		<baseclass>commandbutton</baseclass>
+		<objname>Command2</objname>
+		<parent>_form1</parent>
+		<properties>Top = 564
+Left = 768
+Height = 27
+Width = 96
+Caption = "Async=TRUE"
+Name = "Command2"
+</properties>
+		<protected/>
+		<methods>PROCEDURE Click
+*!* CHECK Thisform.winhttp2.ONRESPONSESTART, ONRESPONSEDATAVAILABLE, ONRESPONSEFINISHED
+
+Local lcurl
+
+m.lcurl = 'http://www.mrwallpaper.com/wallpapers/temple-top-of-mountain-1920x1080.jpg'
+
+Thisform.winhttp2.Open('GET', m.lcurl, .T.)
+Thisform.winhttp2.Send()
+
+
+
+ENDPROC
+</methods>
+		<objcode/>
+		<ole/>
+		<ole2/>
+		<reserved1/>
+		<reserved2/>
+		<reserved3/>
+		<reserved4/>
+		<reserved5/>
+		<reserved6/>
+		<reserved7/>
+		<reserved8/>
+		<user/>
+	</record>
+	<record>
+		<platform>WINDOWS</platform>
+		<uniqueid>_4EQ12RRZ7</uniqueid>
+		<timestamp>1190962368</timestamp>
+		<class>winhttp</class>
+		<classloc>winhttp.vcx</classloc>
+		<baseclass>custom</baseclass>
+		<objname>Winhttp2</objname>
+		<parent>_form1</parent>
+		<properties>Top = 564
+Left = 720
+Name = "Winhttp2"
+</properties>
+		<protected/>
+		<methods>PROCEDURE onresponsedataavailable
+Lparameters pData
+
+Thisform.image1.PictureVal = Thisform.image1.PictureVal + m.pData
+
+DoEvents
+
+ENDPROC
+PROCEDURE onresponsefinished
+
+
+Thisform.image1.PictureVal = this.responsebody
+ENDPROC
+PROCEDURE onresponsestart
+Lparameters pStatus, pContentType
+
+Thisform.image1.PictureVal = ''
+ENDPROC
+</methods>
+		<objcode/>
+		<ole/>
+		<ole2/>
+		<reserved1/>
+		<reserved2/>
+		<reserved3/>
+		<reserved4/>
+		<reserved5/>
+		<reserved6/>
+		<reserved7/>
+		<reserved8/>
+		<user/>
+	</record>
+	<record>
+		<platform>COMMENT</platform>
+		<uniqueid>RESERVED</uniqueid>
+		<timestamp>0</timestamp>
+		<class/>
+		<classloc/>
+		<baseclass/>
+		<objname/>
+		<parent/>
+		<properties>Arial, 0, 9, 5, 15, 12, 32, 3, 0
+</properties>
+		<protected/>
+		<methods/>
+		<objcode/>
+		<ole/>
+		<ole2/>
+		<reserved1/>
+		<reserved2/>
+		<reserved3/>
+		<reserved4/>
+		<reserved5/>
+		<reserved6/>
+		<reserved7/>
+		<reserved8/>
+		<user/>
+	</record>
+</VFPData>

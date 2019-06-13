@@ -1,0 +1,3153 @@
+<?xml version = "1.0" encoding="UTF-8" standalone="yes"?>
+<VFPData>
+	<record>
+		<platform>COMMENT</platform>
+		<uniqueid>Class</uniqueid>
+		<timestamp>0</timestamp>
+		<class/>
+		<classloc/>
+		<baseclass/>
+		<objname/>
+		<parent/>
+		<properties/>
+		<protected/>
+		<methods/>
+		<objcode/>
+		<ole/>
+		<ole2/>
+		<reserved1>VERSION =   3.00</reserved1>
+		<reserved2/>
+		<reserved3/>
+		<reserved4/>
+		<reserved5/>
+		<reserved6/>
+		<reserved7/>
+		<reserved8/>
+		<user/>
+	</record>
+	<record>
+		<platform>WINDOWS</platform>
+		<uniqueid>_3Q2120WCX</uniqueid>
+		<timestamp>1254444838</timestamp>
+		<class>custom</class>
+		<classloc/>
+		<baseclass>custom</baseclass>
+		<objname>winhttp</objname>
+		<parent/>
+		<properties>Height = 24
+Width = 24
+responsebody = .F.
+responsestream = .F.
+responsetext = .F.
+status = .F.
+statustext = .F.
+eventhandler = .F.
+option_useragentstring = 
+option_url = .T.
+option_urlcodepage = .F.
+option_escapepercentinurl = .F.
+option_sslerrorignoreflags = .F.
+option_selectcertificate = .F.
+option_enableredirects = .T.
+option_urlescapedisable = .F.
+option_urlescapedisablequery = .F.
+option_secureprotocols = .F.
+option_enabletracing = .F.
+option_revertimpersonationoverssl = .T.
+option_enablehttpstohttpredirects = .F.
+option_enablepassportauthentication = .F.
+option_maxautomaticredirects = 10
+option_maxresponseheadersize = 65536
+option_maxresponsedrainsize = 1024000
+option_enablehttp1_1 = .T.
+option_enablecertificaterevocationcheck = .F.
+proxysetting = 0
+proxyserver = 
+proxybypasslist = 
+Name = "winhttp"
+</properties>
+		<protected/>
+		<methods>PROCEDURE Destroy
+This.WinHttpRequest = Null
+This.WinHttpRequestEvents = Null
+
+
+ENDPROC
+PROCEDURE Init
+Local thispath
+
+m.thispath = Addbs(Justpath(This.ClassLibrary))
+
+If Not Upper(m.thispath) $ Set('Path') Then
+	Set Path To (Set('Path') + ';' + m.thispath)
+Endif
+
+Do winhttp.prg
+
+*!* We instantiate the two objects from WINHTTP.DLL
+*!* WinHttpRequestEvents class is defined in WINHTTP.PRG
+
+This.AddProperty('WinHttpRequest', Createobject('WinHttp.WinHttpRequest.5.1'))
+This.AddProperty('WinHttpRequestEvents', Createobject('WinHttpRequestEvents'))
+
+*!* Bind events of the prg class to events of this visual class
+
+Bindevent(This.WinHttpRequestEvents, 'IWinHttpRequestEvents_OnResponseStart', This, 'OnResponseStart', 1)
+Bindevent(This.WinHttpRequestEvents, 'IWinHttpRequestEvents_ORDA', This, 'OnResponseDataAvailable')
+Bindevent(This.WinHttpRequestEvents, 'IWinHttpRequestEvents_OnResponseFinished', This, 'OnResponseFinished')
+Bindevent(This.WinHttpRequestEvents, 'IWinHttpRequestEvents_OnError', This, 'OnError', 1)
+
+This.Eventhandler = .F.
+
+
+
+ENDPROC
+PROCEDURE _entitynumtochar
+
+Lparameters pval
+
+Do Case
+
+	Case m.pval = 256
+		m.cchar = 'A'
+
+	Case m.pval = 257
+		m.cchar = 'a'
+
+	Case m.pval = 258
+		m.cchar = 'A'
+
+	Case m.pval = 259
+		m.cchar = 'a'
+
+	Case m.pval = 260
+		m.cchar = 'A'
+
+	Case m.pval = 261
+		m.cchar = 'a'
+
+	Case m.pval = 262
+		m.cchar = 'C'
+
+	Case m.pval = 263
+		m.cchar = 'c'
+
+	Case m.pval = 264
+		m.cchar = 'C'
+
+	Case m.pval = 265
+		m.cchar = 'c'
+
+	Case m.pval = 266
+		m.cchar = 'C'
+
+	Case m.pval = 267
+		m.cchar = 'c'
+
+	Case m.pval = 268
+		m.cchar = 'C'
+
+	Case m.pval = 269
+		m.cchar = 'c'
+
+	Case m.pval = 270
+		m.cchar = 'D'
+
+	Case m.pval = 271
+		m.cchar = 'd'
+
+	Case m.pval = 272
+		m.cchar = 'Ð'
+
+	Case m.pval = 273
+		m.cchar = 'd'
+
+	Case m.pval = 274
+		m.cchar = 'E'
+
+	Case m.pval = 275
+		m.cchar = 'e'
+
+	Case m.pval = 276
+		m.cchar = 'E'
+
+	Case m.pval = 277
+		m.cchar = 'e'
+
+	Case m.pval = 278
+		m.cchar = 'E'
+
+	Case m.pval = 279
+		m.cchar = 'e'
+
+	Case m.pval = 280
+		m.cchar = 'E'
+
+	Case m.pval = 281
+		m.cchar = 'e'
+
+	Case m.pval = 282
+		m.cchar = 'E'
+
+	Case m.pval = 283
+		m.cchar = 'e'
+
+	Case m.pval = 284
+		m.cchar = 'G'
+
+	Case m.pval = 285
+		m.cchar = 'g'
+
+	Case m.pval = 286
+		m.cchar = 'G'
+
+	Case m.pval = 287
+		m.cchar = 'g'
+
+	Case m.pval = 288
+		m.cchar = 'G'
+
+	Case m.pval = 289
+		m.cchar = 'g'
+
+	Case m.pval = 290
+		m.cchar = 'G'
+
+	Case m.pval = 291
+		m.cchar = 'g'
+
+	Case m.pval = 292
+		m.cchar = 'H'
+
+	Case m.pval = 293
+		m.cchar = 'h'
+
+	Case m.pval = 294
+		m.cchar = 'H'
+
+	Case m.pval = 295
+		m.cchar = 'h'
+
+	Case m.pval = 296
+		m.cchar = 'I'
+
+	Case m.pval = 297
+		m.cchar = 'i'
+
+	Case m.pval = 298
+		m.cchar = 'I'
+
+	Case m.pval = 299
+		m.cchar = 'i'
+
+	Case m.pval = 300
+		m.cchar = 'I'
+
+	Case m.pval = 301
+		m.cchar = 'i'
+
+	Case m.pval = 302
+		m.cchar = 'I'
+
+	Case m.pval = 303
+		m.cchar = 'i'
+
+	Case m.pval = 304
+		m.cchar = 'I'
+
+	Case m.pval = 305
+		m.cchar = 'i'
+
+	Case m.pval = 308
+		m.cchar = 'J'
+
+	Case m.pval = 309
+		m.cchar = 'j'
+
+	Case m.pval = 310
+		m.cchar = 'K'
+
+	Case m.pval = 311
+		m.cchar = 'k'
+
+	Case m.pval = 313
+		m.cchar = 'L'
+
+	Case m.pval = 314
+		m.cchar = 'l'
+
+	Case m.pval = 315
+		m.cchar = 'L'
+
+	Case m.pval = 316
+		m.cchar = 'l'
+
+	Case m.pval = 317
+		m.cchar = 'L'
+
+	Case m.pval = 318
+		m.cchar = 'l'
+
+	Case m.pval = 321
+		m.cchar = 'L'
+
+	Case m.pval = 322
+		m.cchar = 'l'
+
+	Case m.pval = 323
+		m.cchar = 'N'
+
+	Case m.pval = 324
+		m.cchar = 'n'
+
+	Case m.pval = 325
+		m.cchar = 'N'
+
+	Case m.pval = 326
+		m.cchar = 'n'
+
+	Case m.pval = 327
+		m.cchar = 'N'
+
+	Case m.pval = 328
+		m.cchar = 'n'
+
+	Case m.pval = 332
+		m.cchar = 'O'
+
+	Case m.pval = 333
+		m.cchar = 'o'
+
+	Case m.pval = 334
+		m.cchar = 'O'
+
+	Case m.pval = 335
+		m.cchar = 'o'
+
+	Case m.pval = 336
+		m.cchar = 'O'
+
+	Case m.pval = 337
+		m.cchar = 'o'
+
+	Case m.pval = 338
+		m.cchar = 'Œ'
+
+	Case m.pval = 339
+		m.cchar = 'œ'
+
+	Case m.pval = 340
+		m.cchar = 'R'
+
+	Case m.pval = 341
+		m.cchar = 'r'
+
+	Case m.pval = 342
+		m.cchar = 'R'
+
+	Case m.pval = 343
+		m.cchar = 'r'
+
+	Case m.pval = 344
+		m.cchar = 'R'
+
+	Case m.pval = 345
+		m.cchar = 'r'
+
+	Case m.pval = 346
+		m.cchar = 'S'
+
+	Case m.pval = 347
+		m.cchar = 's'
+
+	Case m.pval = 348
+		m.cchar = 'S'
+
+	Case m.pval = 349
+		m.cchar = 's'
+
+	Case m.pval = 350
+		m.cchar = 'S'
+
+	Case m.pval = 351
+		m.cchar = 's'
+
+	Case m.pval = 352
+		m.cchar = 'Š'
+
+	Case m.pval = 353
+		m.cchar = 'š'
+
+	Case m.pval = 354
+		m.cchar = 'T'
+
+	Case m.pval = 355
+		m.cchar = 't'
+
+	Case m.pval = 356
+		m.cchar = 'T'
+
+	Case m.pval = 357
+		m.cchar = 't'
+
+	Case m.pval = 358
+		m.cchar = 'T'
+
+	Case m.pval = 359
+		m.cchar = 't'
+
+	Case m.pval = 360
+		m.cchar = 'U'
+
+	Case m.pval = 361
+		m.cchar = 'u'
+
+	Case m.pval = 362
+		m.cchar = 'U'
+
+	Case m.pval = 363
+		m.cchar = 'u'
+
+	Case m.pval = 364
+		m.cchar = 'U'
+
+	Case m.pval = 365
+		m.cchar = 'u'
+
+	Case m.pval = 366
+		m.cchar = 'U'
+
+	Case m.pval = 367
+		m.cchar = 'u'
+
+	Case m.pval = 368
+		m.cchar = 'U'
+
+	Case m.pval = 369
+		m.cchar = 'u'
+
+	Case m.pval = 370
+		m.cchar = 'U'
+
+	Case m.pval = 371
+		m.cchar = 'u'
+
+	Case m.pval = 372
+		m.cchar = 'W'
+
+	Case m.pval = 373
+		m.cchar = 'w'
+
+	Case m.pval = 374
+		m.cchar = 'Y'
+
+	Case m.pval = 375
+		m.cchar = 'y'
+
+	Case m.pval = 376
+		m.cchar = 'Ÿ'
+
+	Case m.pval = 377
+		m.cchar = 'Z'
+
+	Case m.pval = 378
+		m.cchar = 'z'
+
+	Case m.pval = 379
+		m.cchar = 'Z'
+
+	Case m.pval = 380
+		m.cchar = 'z'
+
+	Case m.pval = 381
+		m.cchar = 'Ž'
+
+	Case m.pval = 382
+		m.cchar = 'ž'
+
+	Case m.pval = 384
+		m.cchar = 'b'
+
+	Case m.pval = 393
+		m.cchar = 'Ð'
+
+	Case m.pval = 401
+		m.cchar = 'ƒ'
+
+	Case m.pval = 402
+		m.cchar = 'ƒ'
+
+	Case m.pval = 407
+		m.cchar = 'I'
+
+	Case m.pval = 410
+		m.cchar = 'l'
+
+	Case m.pval = 415
+		m.cchar = 'O'
+
+	Case m.pval = 416
+		m.cchar = 'O'
+
+	Case m.pval = 417
+		m.cchar = 'o'
+
+	Case m.pval = 427
+		m.cchar = 't'
+
+	Case m.pval = 430
+		m.cchar = 'T'
+
+	Case m.pval = 431
+		m.cchar = 'U'
+
+	Case m.pval = 432
+		m.cchar = 'u'
+
+	Case m.pval = 438
+		m.cchar = 'z'
+
+	Case m.pval = 448
+		m.cchar = '|'
+
+	Case m.pval = 451
+		m.cchar = '!'
+
+	Case m.pval = 461
+		m.cchar = 'A'
+
+	Case m.pval = 462
+		m.cchar = 'a'
+
+	Case m.pval = 463
+		m.cchar = 'I'
+
+	Case m.pval = 464
+		m.cchar = 'i'
+
+	Case m.pval = 465
+		m.cchar = 'O'
+
+	Case m.pval = 466
+		m.cchar = 'o'
+
+	Case m.pval = 467
+		m.cchar = 'U'
+
+	Case m.pval = 468
+		m.cchar = 'u'
+
+	Case m.pval = 469
+		m.cchar = 'U'
+
+	Case m.pval = 470
+		m.cchar = 'u'
+
+	Case m.pval = 471
+		m.cchar = 'U'
+
+	Case m.pval = 472
+		m.cchar = 'u'
+
+	Case m.pval = 473
+		m.cchar = 'U'
+
+	Case m.pval = 474
+		m.cchar = 'u'
+
+	Case m.pval = 475
+		m.cchar = 'U'
+
+	Case m.pval = 476
+		m.cchar = 'u'
+
+	Case m.pval = 478
+		m.cchar = 'A'
+
+	Case m.pval = 479
+		m.cchar = 'a'
+
+	Case m.pval = 484
+		m.cchar = 'G'
+
+	Case m.pval = 485
+		m.cchar = 'g'
+
+	Case m.pval = 486
+		m.cchar = 'G'
+
+	Case m.pval = 487
+		m.cchar = 'g'
+
+	Case m.pval = 488
+		m.cchar = 'K'
+
+	Case m.pval = 489
+		m.cchar = 'k'
+
+	Case m.pval = 490
+		m.cchar = 'O'
+
+	Case m.pval = 491
+		m.cchar = 'o'
+
+	Case m.pval = 492
+		m.cchar = 'O'
+
+	Case m.pval = 493
+		m.cchar = 'o'
+
+	Case m.pval = 496
+		m.cchar = 'j'
+
+	Case m.pval = 609
+		m.cchar = 'g'
+
+	Case m.pval = 697
+		m.cchar = "'"
+
+	Case m.pval = 698
+		m.cchar = '"'
+
+	Case m.pval = 700
+		m.cchar = "'"
+
+	Case m.pval = 708
+		m.cchar = '^'
+
+	Case m.pval = 710
+		m.cchar = 'ˆ'
+
+	Case m.pval = 712
+		m.cchar = "'"
+
+	Case m.pval = 713
+		m.cchar = '¯'
+
+	Case m.pval = 714
+		m.cchar = '´'
+
+	Case m.pval = 715
+		m.cchar = '`'
+
+	Case m.pval = 717
+		m.cchar = '_'
+
+	Case m.pval = 730
+		m.cchar = '°'
+
+	Case m.pval = 732
+		m.cchar = '˜'
+
+	Case m.pval = 768
+		m.cchar = '`'
+
+	Case m.pval = 769
+		m.cchar = '´'
+
+	Case m.pval = 770
+		m.cchar = '^'
+
+	Case m.pval = 772
+		m.cchar = '¯'
+
+	Case m.pval = 773
+		m.cchar = '¯'
+
+	Case m.pval = 776
+		m.cchar = '¨'
+
+	Case m.pval = 778
+		m.cchar = '°'
+
+	Case m.pval = 782
+		m.cchar = '"'
+
+	Case m.pval = 807
+		m.cchar = '¸'
+
+	Case m.pval = 817
+		m.cchar = '_'
+
+	Case m.pval = 818
+		m.cchar = '_'
+
+	Case m.pval = 894
+		m.cchar = ';'
+
+	Case m.pval = 915
+		m.cchar = 'G'
+
+	Case m.pval = 920
+		m.cchar = 'T'
+
+	Case m.pval = 931
+		m.cchar = 'S'
+
+	Case m.pval = 934
+		m.cchar = 'F'
+
+	Case m.pval = 937
+		m.cchar = 'O'
+
+	Case m.pval = 945
+		m.cchar = 'a'
+
+	Case m.pval = 946
+		m.cchar = 'ß'
+
+	Case m.pval = 948
+		m.cchar = 'd'
+
+	Case m.pval = 949
+		m.cchar = 'e'
+
+	Case m.pval = 956
+		m.cchar = 'µ'
+
+	Case m.pval = 960
+		m.cchar = 'p'
+
+	Case m.pval = 963
+		m.cchar = 's'
+
+	Case m.pval = 964
+		m.cchar = 't'
+
+	Case m.pval = 966
+		m.cchar = 'f'
+
+	Case m.pval = 1211
+		m.cchar = 'h'
+
+	Case m.pval = 1417
+		m.cchar = ':'
+
+	Case m.pval = 1642
+		m.cchar = '%'
+
+	Case m.pval = 8208
+		m.cchar = '-'
+
+	Case m.pval = 8209
+		m.cchar = '-'
+
+	Case m.pval = 8211
+		m.cchar = '–'
+
+	Case m.pval = 8212
+		m.cchar = '—'
+
+	Case m.pval = 8215
+		m.cchar = '='
+
+	Case m.pval = 8216
+		m.cchar = '‘'
+
+	Case m.pval = 8217
+		m.cchar = '’'
+
+	Case m.pval = 8218
+		m.cchar = '‚'
+
+	Case m.pval = 8220
+		m.cchar = '“'
+
+	Case m.pval = 8221
+		m.cchar = '”'
+
+	Case m.pval = 8222
+		m.cchar = '„'
+
+	Case m.pval = 8224
+		m.cchar = '†'
+
+	Case m.pval = 8225
+		m.cchar = '‡'
+
+	Case m.pval = 8226
+		m.cchar = '•'
+
+	Case m.pval = 8228
+		m.cchar = '·'
+
+	Case m.pval = 8230
+		m.cchar = '…'
+
+	Case m.pval = 8240
+		m.cchar = '‰'
+
+	Case m.pval = 8242
+		m.cchar = "'"
+
+	Case m.pval = 8245
+		m.cchar = '`'
+
+	Case m.pval = 8249
+		m.cchar = '‹'
+
+	Case m.pval = 8250
+		m.cchar = '›'
+
+	Case m.pval = 8260
+		m.cchar = '/'
+
+	Case m.pval = 8304
+		m.cchar = '°'
+
+	Case m.pval = 8308
+		m.cchar = '4'
+
+	Case m.pval = 8309
+		m.cchar = '5'
+
+	Case m.pval = 8310
+		m.cchar = '6'
+
+	Case m.pval = 8311
+		m.cchar = '7'
+
+	Case m.pval = 8312
+		m.cchar = '8'
+
+	Case m.pval = 8319
+		m.cchar = 'n'
+
+	Case m.pval = 8320
+		m.cchar = '0'
+
+	Case m.pval = 8321
+		m.cchar = '1'
+
+	Case m.pval = 8322
+		m.cchar = '2'
+
+	Case m.pval = 8323
+		m.cchar = '3'
+
+	Case m.pval = 8324
+		m.cchar = '4'
+
+	Case m.pval = 8325
+		m.cchar = '5'
+
+	Case m.pval = 8326
+		m.cchar = '6'
+
+	Case m.pval = 8327
+		m.cchar = '7'
+
+	Case m.pval = 8328
+		m.cchar = '8'
+
+	Case m.pval = 8329
+		m.cchar = '9'
+
+	Case m.pval = 8353
+		m.cchar = '¢'
+
+	Case m.pval = 8356
+		m.cchar = '£'
+
+	Case m.pval = 8359
+		m.cchar = 'P'
+
+	Case m.pval = 8364
+		m.cchar = '€'
+
+	Case m.pval = 8450
+		m.cchar = 'C'
+
+	Case m.pval = 8455
+		m.cchar = 'E'
+
+	Case m.pval = 8458
+		m.cchar = 'g'
+
+	Case m.pval = 8459
+		m.cchar = 'H'
+
+	Case m.pval = 8460
+		m.cchar = 'H'
+
+	Case m.pval = 8461
+		m.cchar = 'H'
+
+	Case m.pval = 8462
+		m.cchar = 'h'
+
+	Case m.pval = 8464
+		m.cchar = 'I'
+
+	Case m.pval = 8465
+		m.cchar = 'I'
+
+	Case m.pval = 8466
+		m.cchar = 'L'
+
+	Case m.pval = 8467
+		m.cchar = 'l'
+
+	Case m.pval = 8469
+		m.cchar = 'N'
+
+	Case m.pval = 8472
+		m.cchar = 'P'
+
+	Case m.pval = 8473
+		m.cchar = 'P'
+
+	Case m.pval = 8474
+		m.cchar = 'Q'
+
+	Case m.pval = 8475
+		m.cchar = 'R'
+
+	Case m.pval = 8476
+		m.cchar = 'R'
+
+	Case m.pval = 8477
+		m.cchar = 'R'
+
+	Case m.pval = 8482
+		m.cchar = '™'
+
+	Case m.pval = 8484
+		m.cchar = 'Z'
+
+	Case m.pval = 8488
+		m.cchar = 'Z'
+
+	Case m.pval = 8490
+		m.cchar = 'K'
+
+	Case m.pval = 8491
+		m.cchar = 'Å'
+
+	Case m.pval = 8492
+		m.cchar = 'B'
+
+	Case m.pval = 8493
+		m.cchar = 'C'
+
+	Case m.pval = 8494
+		m.cchar = 'e'
+
+	Case m.pval = 8495
+		m.cchar = 'e'
+
+	Case m.pval = 8496
+		m.cchar = 'E'
+
+	Case m.pval = 8497
+		m.cchar = 'F'
+
+	Case m.pval = 8499
+		m.cchar = 'M'
+
+	Case m.pval = 8500
+		m.cchar = 'o'
+
+	Case m.pval = 8709
+		m.cchar = 'Ø'
+
+	Case m.pval = 8722
+		m.cchar = '-'
+
+	Case m.pval = 8723
+		m.cchar = '±'
+
+	Case m.pval = 8725
+		m.cchar = '/'
+
+	Case m.pval = 8726
+		m.cchar = '\'
+
+	Case m.pval = 8727
+		m.cchar = '*'
+
+	Case m.pval = 8728
+		m.cchar = '°'
+
+	Case m.pval = 8729
+		m.cchar = '·'
+
+	Case m.pval = 8730
+		m.cchar = 'v'
+
+	Case m.pval = 8734
+		m.cchar = '8'
+
+	Case m.pval = 8739
+		m.cchar = '|'
+
+	Case m.pval = 8745
+		m.cchar = 'n'
+
+	Case m.pval = 8758
+		m.cchar = ':'
+
+	Case m.pval = 8776
+		m.cchar = '˜'
+
+	Case m.pval = 8801
+		m.cchar = '='
+
+	Case m.pval = 8804
+		m.cchar = '='
+
+	Case m.pval = 8805
+		m.cchar = '='
+
+	Case m.pval = 8810
+		m.cchar = '«'
+
+	Case m.pval = 8811
+		m.cchar = '»'
+
+	Case m.pval = 8901
+		m.cchar = '·'
+
+	Case m.pval = 8962
+		m.cchar = '¦'
+
+	Case m.pval = 8963
+		m.cchar = '^'
+
+	Case m.pval = 8976
+		m.cchar = '¬'
+
+	Case m.pval = 8992
+		m.cchar = '('
+
+	Case m.pval = 8993
+		m.cchar = ')'
+
+	Otherwise
+		m.cchar = '~'
+
+Endcase
+
+Return m.cchar
+ENDPROC
+PROCEDURE _formatbytesize
+*!* _FormatByteSize
+
+Lparameters pnSizeInBytes
+
+Local lcSize, lcUnit, lnSize
+
+If Vartype(m.pnSizeInBytes) # 'N' Then
+	Return ''
+Endif
+
+Do Case
+	Case m.pnSizeInBytes = 0
+		m.lnSize = m.pnSizeInBytes
+		m.lcUnit = ' Bytes'
+	Case m.pnSizeInBytes &lt; 999					&amp;&amp; Bytes
+		m.lnSize = m.pnSizeInBytes
+		m.lcUnit = ' Bytes'
+	Case m.pnSizeInBytes &lt; 1024^1 * 999			&amp;&amp; KiloBytes
+		m.lnSize = m.pnSizeInBytes / 1024^1
+		m.lcUnit = ' KB'
+	Case m.pnSizeInBytes &lt; 1024^2 * 999			&amp;&amp; MegaBytes
+		m.lnSize = m.pnSizeInBytes / 1024^2
+		m.lcUnit = ' MB'
+	Case m.pnSizeInBytes &lt; 1024^3 * 999			&amp;&amp; GigaBytes
+		m.lnSize = m.pnSizeInBytes / 1024^3
+		m.lcUnit = ' GB'
+	Otherwise
+		m.lnSize = m.pnSizeInBytes / 1024^4		&amp;&amp; TeraBytes
+		m.lcUnit = ' TB'
+Endcase
+
+Do Case
+	Case m.lnSize &gt; 1000
+		m.lnSize = Round(m.lnSize, 1)
+		m.lcSize = Transform(m.lnSize, '9999.9')
+	Case m.lnSize &gt; 100
+		m.lnSize = Round(m.lnSize, 1)
+		m.lcSize = Transform(m.lnSize, '999.9')
+	Case m.lnSize &gt; 10
+		m.lnSize = Round(m.lnSize, 1)
+		m.lcSize = Transform(m.lnSize, '99.9')
+	Case m.lnSize = 0
+		m.lnSize = Round(m.lnSize, 0)
+		m.lcSize = Transform(m.lnSize, '9')
+
+	Otherwise
+		m.lnSize = Round(m.lnSize, 2)
+		m.lcSize = Transform(m.lnSize, '99.99')
+Endcase
+
+Return m.lcSize + m.lcUnit
+ENDPROC
+PROCEDURE _justfname
+*!* _JUSTFNAME
+
+Lparameters purl
+
+Local curl
+
+m.purl = Alltrim(m.purl)
+
+If '?' $ m.purl Then
+
+	m.curl = Strextract(m.purl, '', '?')
+
+Else
+
+	m.curl = m.purl
+
+Endif
+
+m.curl = Justfname(m.curl)
+
+Return m.curl
+ENDPROC
+PROCEDURE abort
+*!* ABORT
+
+*!*	The Abort method aborts a WinHTTP Send method.
+
+*!* Return Value
+*!* None
+
+*!*	Remarks
+*!*	You can abort both asynchronous and synchronous Send methods.
+*!*	To abort a synchronous Send method, you must call Abort from within an IWinHttpRequestEvents event.
+
+This.WinHttpRequest.Abort()
+
+
+ENDPROC
+PROCEDURE getallresponseheaders
+*!* GETALLRESPONSEHEADERS
+
+*!*	The GetAllResponseHeaders method retrieves all HTTP response headers.
+
+*!* Return Value
+*!* String
+
+*!*	Remarks
+*!*	This method returns all of the headers contained in the most recent server response.
+*!*	The individual headers are delimited by a carriage return and line feed combination
+*!*	(ASCII 13 and 10). The last entry is followed by two delimiters (13, 10, 13, 10).
+*!*	Invoke this method only after the Send method has been called.
+
+Local result
+
+Try
+	m.result = This.WinHttpRequest.GetAllResponseHeaders()
+Catch
+	m.result = ''
+	?'ERROR GETALLRESPONSEHEADERS'
+Endtry
+
+Return m.result
+
+ENDPROC
+PROCEDURE getdomainfromurl
+*!* getdomainfromurl
+
+#Define Uri_CREATE_CANONICALIZE 0x0100
+#Define Uri_CREATE_NO_CANONICALIZE	0x0010
+
+#Define PARSE_CANONICALIZE		1
+#Define PARSE_FRIENDLY 			2
+#Define PARSE_SECURITY_URL		3
+#Define PARSE_ROOTDOCUMENT		4
+#Define PARSE_DOCUMENT			5
+#Define PARSE_ANCHOR			6
+#Define PARSE_ENCODE			7
+#Define PARSE_DECODE			8
+#Define PARSE_PATH_FROM_URL		9
+#Define PARSE_URL_FROM_PATH		10
+#Define PARSE_MIME				11
+#Define PARSE_SERVER			12
+#Define PARSE_SCHEMA			13
+#Define PARSE_SITE				14
+#Define PARSE_DOMAIN			15
+#Define PARSE_LOCATION			16
+#Define PARSE_SECURITY_DOMAIN	17
+#Define PARSE_ESCAPE			18
+#Define PARSE_UNESCAPE			19
+
+Lparameters purl
+
+Local ParseAction, cchResult, dwCodePage, dwCreateFlags, dwEncodingFlags, dwFlags, dwReserved, pcchResult, ppURI, pszANSIInputUri, pwzResult, result
+
+If Empty(m.purl) Then
+
+	Return ''
+
+Endif
+
+m.pszANSIInputUri = m.purl
+m.dwEncodingFlags = 0x00000002
+m.dwCodePage	  = Cpcurrent(1)
+m.dwCreateFlags	  = Uri_CREATE_NO_CANONICALIZE
+m.dwReserved	  = 0
+m.ppURI			  = 0
+
+m.result = _apiCreateUriFromMultiByteString(m.pszANSIInputUri, m.dwEncodingFlags, m.dwCodePage, m.dwCreateFlags, m.dwReserved, @m.ppURI)
+
+If m.result # 0 Then
+
+	*!* if we are here, there was a problem with the URL, maybe not an url at all, or
+	*!* maybe just missing the protocol. just return an empty string
+
+	m.pwzResult = ''
+
+Else
+
+	m.ParseAction = PARSE_DOMAIN
+	m.dwFlags	  = 0
+	m.cchResult	  = 512
+	m.pwzResult	  = Space(m.cchResult)
+	m.pcchResult  = 0
+	m.dwReserved  = 0
+
+	m.result = _apiCoInternetParseIUri(m.ppURI, m.ParseAction, m.dwFlags, @m.pwzResult, m.cchResult, @m.pcchResult, m.dwReserved)
+
+	If m.result # 0 Then
+
+		Error '_apiCoInternetParseIUri'
+
+	Endif
+
+	m.pwzResult = Strconv(Strconv(Left(m.pwzResult, m.pcchResult * 2), 6), 2)
+
+	_apiIUnknown_AtomicRelease(@m.ppURI)
+
+Endif
+
+Return m.pwzResult
+
+
+
+
+
+ENDPROC
+PROCEDURE getresponseheader
+*!* GETRESPONSEHEADER
+
+*!*	The GetResponseHeader method retrieves the HTTP response headers.
+
+*!*	Parameters
+*!*	Header [in]
+*!*	Specifies the case-insensitive header name.
+
+*!*	Return value
+*!*	String
+
+*!*	Remarks
+*!*	This method returns the value of the response header named in Header.
+*!*	Be aware that automation clients, such as script, get the header data as
+*!*	the return value of the function call, not through a function parameter.
+*!*	Invoke this method only after the Send method has been called.
+
+Lparameters pHeader
+
+Local result
+
+m.pHeader = Alltrim(m.pHeader)
+
+Try
+	m.result = This.WinHttpRequest.GetResponseHeader(m.pHeader)
+Catch
+	m.result = ''
+Endtry
+
+Return m.result
+
+
+ENDPROC
+PROCEDURE htmlbeautify
+*!* htmlbeautify
+
+Lparameters phtml
+
+Local lalines[1], lcline1, lcline2, lnlines, lnx
+
+m.phtml = Strtran(This.htmltidy(m.phtml), '&gt;&lt;', '&gt;' + 0h0d0a + '&lt;')
+
+*!* ALL THIS IS TO PREVENT EMPTY VALUES FROM ADDING AN EXTRA CRLF LIKE:
+*!* &lt;url&gt;
+*!* &lt;/url&gt;
+
+m.lnlines = Alines(lalines, m.phtml)
+
+For m.lnx = 2 To m.lnlines
+
+	m.lcline1 = Strtran(m.lalines(m.lnx - 1), '&lt;', '&lt;/')
+	m.lcline2 = m.lalines(m.lnx)
+
+	If Not m.lcline1 = m.lcline2
+
+		m.lalines(m.lnx - 1) = m.lalines(m.lnx - 1) + 0h0d0a
+
+	Endif
+
+Endfor
+
+m.phtml = ''
+
+For m.lnx = 1 To m.lnlines
+
+	m.phtml = m.phtml + m.lalines(m.lnx)
+
+Endfor
+
+Return m.phtml
+
+
+ENDPROC
+PROCEDURE htmldecode
+*!* HTMLDECODE
+
+Lparameters phtml, plight
+
+Local centity, nval, uhtml
+
+
+m.phtml = Alltrim(m.phtml)
+
+If Empty(m.phtml) Then
+
+	Return m.phtml
+
+Endif
+
+Do While '&amp;amp;' $ m.phtml
+
+	m.phtml = Strtran(m.phtml, '&amp;amp;', '&amp;')
+
+Enddo
+
+*!* DEAL WITH HEXADECIMAL ENTITIES
+
+Do While .T.
+
+	m.centity = Strextract(m.phtml, '&amp;#x', ';', 1, 5)
+
+	If Empty(m.centity) Then
+
+		Exit
+
+	Endif
+
+	m.nval = Val('0x' + Strextract(m.centity, '&amp;#x', ';', 1, 1))
+
+	If m.nval &gt; 255 Then
+
+		m.phtml = Strtran(m.phtml, m.centity, This._entitynumtochar(m.nval))
+
+	Else
+
+		m.phtml = Strtran(m.phtml, m.centity, Chr(m.nval))
+
+	Endif
+
+Enddo
+
+*!* DEAL WITH DECIMAL ENTITIES
+
+Do While .T.
+
+	m.centity = Strextract(m.phtml, '&amp;#', ';', 1, 5)
+
+	If Empty(m.centity) Then
+
+		Exit
+
+	Endif
+
+	m.nval = Val(Strextract(m.centity, '&amp;#', ';', 1, 1))
+
+	If m.nval &gt; 255 Then
+
+		m.phtml = Strtran(m.phtml, m.centity, This._entitynumtochar(m.nval))
+
+	Else
+
+		m.phtml = Strtran(m.phtml, m.centity, Chr(m.nval))
+
+	Endif
+
+Enddo
+
+m.uhtml = Upper(m.phtml)
+
+If '&amp;Q' $ m.uhtml
+
+	m.phtml	= Strtran(m.phtml, '&amp;quot;',               '"')
+	m.phtml	= Strtran(m.phtml, '&amp;quot',                '"')
+	m.phtml	= Strtran(m.phtml, '&amp;Quot;',               '"')
+	m.phtml	= Strtran(m.phtml, '&amp;Quot',                '"')
+
+Endif
+
+If m.plight = .F.
+
+	If '&amp;Y' $ m.uhtml
+
+		m.phtml	= Strtran(m.phtml, '&amp;yuml;',               'ÿ')
+		m.phtml	= Strtran(m.phtml, '&amp;yuml',                'ÿ')
+		m.phtml	= Strtran(m.phtml, '&amp;yen;',                '¥')
+		m.phtml	= Strtran(m.phtml, '&amp;yen',                 '¥')
+		m.phtml	= Strtran(m.phtml, '&amp;Yacute;',             'Ý')
+		m.phtml	= Strtran(m.phtml, '&amp;yacute;',             'ý')
+		m.phtml	= Strtran(m.phtml, '&amp;Yacute',              'Ý')
+		m.phtml	= Strtran(m.phtml, '&amp;yacute',              'ý')
+
+	Endif
+
+	If '&amp;V' $ m.uhtml
+
+		m.phtml	= Strtran(m.phtml, '&amp;VerticalLine;',       '|')
+		m.phtml	= Strtran(m.phtml, '&amp;vert;',               '|')
+		m.phtml	= Strtran(m.phtml, '&amp;verbar;',             '|')
+
+	Endif
+
+	If '&amp;U' $ m.uhtml
+
+		m.phtml	= Strtran(m.phtml, '&amp;Uuml;',               'Ü')
+		m.phtml	= Strtran(m.phtml, '&amp;uuml;',               'ü')
+		m.phtml	= Strtran(m.phtml, '&amp;Uuml',                'Ü')
+		m.phtml	= Strtran(m.phtml, '&amp;uuml',                'ü')
+		m.phtml	= Strtran(m.phtml, '&amp;UnderBar;',           '_')
+		m.phtml	= Strtran(m.phtml, '&amp;uml;',                '¨')
+		m.phtml	= Strtran(m.phtml, '&amp;uml',                 '¨')
+		m.phtml	= Strtran(m.phtml, '&amp;Ugrave;',             'Ù')
+		m.phtml	= Strtran(m.phtml, '&amp;ugrave;',             'ù')
+		m.phtml	= Strtran(m.phtml, '&amp;Ugrave',              'Ù')
+		m.phtml	= Strtran(m.phtml, '&amp;ugrave',              'ù')
+		m.phtml	= Strtran(m.phtml, '&amp;Ucirc;',              'Û')
+		m.phtml	= Strtran(m.phtml, '&amp;ucirc;',              'û')
+		m.phtml	= Strtran(m.phtml, '&amp;Ucirc',               'Û')
+		m.phtml	= Strtran(m.phtml, '&amp;ucirc',               'û')
+		m.phtml	= Strtran(m.phtml, '&amp;Uacute;',             'Ú')
+		m.phtml	= Strtran(m.phtml, '&amp;uacute;',             'ú')
+		m.phtml	= Strtran(m.phtml, '&amp;Uacute',              'Ú')
+		m.phtml	= Strtran(m.phtml, '&amp;uacute',              'ú')
+
+	Endif
+
+	If '&amp;T' $ m.uhtml
+
+		m.phtml	= Strtran(m.phtml, '&amp;trade;',              '™')
+		m.phtml	= Strtran(m.phtml, '&amp;times;',              '×')
+		m.phtml	= Strtran(m.phtml, '&amp;times',               '×')
+		m.phtml	= Strtran(m.phtml, '&amp;THORN;',              'Þ')
+		m.phtml	= Strtran(m.phtml, '&amp;thorn;',              'þ')
+		m.phtml	= Strtran(m.phtml, '&amp;THORN',               'Þ')
+		m.phtml	= Strtran(m.phtml, '&amp;thorn',               'þ')
+		m.phtml	= Strtran(m.phtml, '&amp;Tab;',                ' ')
+
+	Endif
+
+	If '&amp;S' $ m.uhtml
+
+		m.phtml	= Strtran(m.phtml, '&amp;szlig;',              'ß')
+		m.phtml	= Strtran(m.phtml, '&amp;szlig',               'ß')
+		m.phtml	= Strtran(m.phtml, '&amp;sup3;',               '³')
+		m.phtml	= Strtran(m.phtml, '&amp;sup3',                '³')
+		m.phtml	= Strtran(m.phtml, '&amp;sup2;',               '²')
+		m.phtml	= Strtran(m.phtml, '&amp;sup2',                '²')
+		m.phtml	= Strtran(m.phtml, '&amp;sup1;',               '¹')
+		m.phtml	= Strtran(m.phtml, '&amp;sup1',                '¹')
+		m.phtml	= Strtran(m.phtml, '&amp;strns;',              '¯')
+		m.phtml	= Strtran(m.phtml, '&amp;sol;',                '/')
+		m.phtml	= Strtran(m.phtml, '&amp;shy;',                '­')
+		m.phtml	= Strtran(m.phtml, '&amp;shy',                 '­')
+		m.phtml	= Strtran(m.phtml, '&amp;semi;',               ';')
+		m.phtml	= Strtran(m.phtml, '&amp;sect;',               '§')
+		m.phtml	= Strtran(m.phtml, '&amp;sect',                '§')
+		m.phtml	= Strtran(m.phtml, '&amp;Scaron;',             'Š')
+		m.phtml	= Strtran(m.phtml, '&amp;sbquo;',              "‚")
+
+	Endif
+
+	If '&amp;R' $ m.uhtml
+
+		m.phtml	= Strtran(m.phtml, '&amp;rsquo;',              "’")
+		m.phtml	= Strtran(m.phtml, '&amp;rsqb;',               ']')
+		m.phtml	= Strtran(m.phtml, '&amp;rsaquo;',             "›")
+		m.phtml	= Strtran(m.phtml, '&amp;rpar;',               ')')
+		m.phtml	= Strtran(m.phtml, '&amp;REG;',                '®')
+		m.phtml	= Strtran(m.phtml, '&amp;reg;',                '®')
+		m.phtml	= Strtran(m.phtml, '&amp;REG',                 '®')
+		m.phtml	= Strtran(m.phtml, '&amp;reg',                 '®')
+		m.phtml	= Strtran(m.phtml, '&amp;rdquo;',              '”')
+		m.phtml	= Strtran(m.phtml, '&amp;rcub;',               '}')
+		m.phtml	= Strtran(m.phtml, '&amp;rbrack;',             ']')
+		m.phtml	= Strtran(m.phtml, '&amp;rbrace;',             '}')
+		m.phtml	= Strtran(m.phtml, '&amp;raquo;',              '»')
+		m.phtml	= Strtran(m.phtml, '&amp;raquo',               '»')
+		m.phtml	= Strtran(m.phtml, '&amp;radic;',              'v')
+
+	Endif
+
+	If '&amp;P' $ m.uhtml
+
+		m.phtml	= Strtran(m.phtml, '&amp;prime;',              "'")
+		m.phtml	= Strtran(m.phtml, '&amp;pound;',              '£')
+		m.phtml	= Strtran(m.phtml, '&amp;pound',               '£')
+		m.phtml	= Strtran(m.phtml, '&amp;pm;',                 '±')
+		m.phtml	= Strtran(m.phtml, '&amp;plusmn;',             '±')
+		m.phtml	= Strtran(m.phtml, '&amp;plusmn',              '±')
+		m.phtml	= Strtran(m.phtml, '&amp;PlusMinus;',          '±')
+		m.phtml	= Strtran(m.phtml, '&amp;plus;',               '+')
+		m.phtml	= Strtran(m.phtml, '&amp;period;',             '.')
+		m.phtml	= Strtran(m.phtml, '&amp;percnt;',             '%')
+		m.phtml	= Strtran(m.phtml, '&amp;para;',               '¶')
+		m.phtml	= Strtran(m.phtml, '&amp;para',                '¶')
+
+	Endif
+
+	If '&amp;O' $ m.uhtml
+
+		m.phtml	= Strtran(m.phtml, '&amp;Ouml;',               'Ö')
+		m.phtml	= Strtran(m.phtml, '&amp;ouml;',               'ö')
+		m.phtml	= Strtran(m.phtml, '&amp;Ouml',                'Ö')
+		m.phtml	= Strtran(m.phtml, '&amp;ouml',                'ö')
+		m.phtml	= Strtran(m.phtml, '&amp;Otilde;',             'Õ')
+		m.phtml	= Strtran(m.phtml, '&amp;otilde;',             'õ')
+		m.phtml	= Strtran(m.phtml, '&amp;Otilde',              'Õ')
+		m.phtml	= Strtran(m.phtml, '&amp;otilde',              'õ')
+		m.phtml	= Strtran(m.phtml, '&amp;Oslash;',             'Ø')
+		m.phtml	= Strtran(m.phtml, '&amp;oslash;',             'ø')
+		m.phtml	= Strtran(m.phtml, '&amp;Oslash',              'Ø')
+		m.phtml	= Strtran(m.phtml, '&amp;oslash',              'ø')
+		m.phtml	= Strtran(m.phtml, '&amp;ordm;',               'º')
+		m.phtml	= Strtran(m.phtml, '&amp;ordm',                'º')
+		m.phtml	= Strtran(m.phtml, '&amp;ordf;',               'ª')
+		m.phtml	= Strtran(m.phtml, '&amp;ordf',                'ª')
+		m.phtml	= Strtran(m.phtml, '&amp;Ograve;',             'Ò')
+		m.phtml	= Strtran(m.phtml, '&amp;ograve;',             'ò')
+		m.phtml	= Strtran(m.phtml, '&amp;Ograve',              'Ò')
+		m.phtml	= Strtran(m.phtml, '&amp;ograve',              'ò')
+		m.phtml	= Strtran(m.phtml, '&amp;Ocirc;',              'Ô')
+		m.phtml	= Strtran(m.phtml, '&amp;ocirc;',              'ô')
+		m.phtml	= Strtran(m.phtml, '&amp;Ocirc',               'Ô')
+		m.phtml	= Strtran(m.phtml, '&amp;ocirc',               'ô')
+		m.phtml	= Strtran(m.phtml, '&amp;Oacute;',             'Ó')
+		m.phtml	= Strtran(m.phtml, '&amp;oacute;',             'ó')
+		m.phtml	= Strtran(m.phtml, '&amp;Oacute',              'Ó')
+		m.phtml	= Strtran(m.phtml, '&amp;oacute',              'ó')
+
+	Endif
+
+	If '&amp;N' $ m.uhtml
+
+		m.phtml	= Strtran(m.phtml, '&amp;num;',                '#')
+		m.phtml	= Strtran(m.phtml, '&amp;Ntilde;',             'Ñ')
+		m.phtml	= Strtran(m.phtml, '&amp;ntilde;',             'ñ')
+		m.phtml	= Strtran(m.phtml, '&amp;Ntilde',              'Ñ')
+		m.phtml	= Strtran(m.phtml, '&amp;ntilde',              'ñ')
+		m.phtml	= Strtran(m.phtml, '&amp;not;',                '¬')
+		m.phtml	= Strtran(m.phtml, '&amp;not',                 '¬')
+		m.phtml	= Strtran(m.phtml, '&amp;NonBreakingSpace;',   ' ')
+		m.phtml	= Strtran(m.phtml, '&amp;NewLine;',            ' ')
+		m.phtml	= Strtran(m.phtml, '&amp;ndash;',              '–')
+		m.phtml	= Strtran(m.phtml, '&amp;nbsp;',               ' ')
+		m.phtml	= Strtran(m.phtml, '&amp;nbsp',                ' ')
+
+	Endif
+
+	If '&amp;M' $ m.uhtml
+
+		m.phtml	= Strtran(m.phtml, '&amp;middot;',             '·')
+		m.phtml	= Strtran(m.phtml, '&amp;middot',              '·')
+		m.phtml	= Strtran(m.phtml, '&amp;midast;',             '*')
+		m.phtml	= Strtran(m.phtml, '&amp;micro;',              'µ')
+		m.phtml	= Strtran(m.phtml, '&amp;micro',               'µ')
+		m.phtml	= Strtran(m.phtml, '&amp;mdash;',              '—')
+		m.phtml	= Strtran(m.phtml, '&amp;macr;',               '¯')
+		m.phtml	= Strtran(m.phtml, '&amp;macr',                '¯')
+
+	Endif
+
+	If '&amp;L' $ m.uhtml
+
+		m.phtml	= Strtran(m.phtml, '&amp;LT;',                 '&lt;')
+		m.phtml	= Strtran(m.phtml, '&amp;lt;',                 '&lt;')
+		m.phtml	= Strtran(m.phtml, '&amp;LT',                  '&lt;')
+		m.phtml	= Strtran(m.phtml, '&amp;lt',                  '&lt;')
+		m.phtml	= Strtran(m.phtml, '&amp;lsquo;',              "‘")
+		m.phtml	= Strtran(m.phtml, '&amp;lsqb;',               '[')
+		m.phtml	= Strtran(m.phtml, '&amp;lsaquo;',             "‹")
+		m.phtml	= Strtran(m.phtml, '&amp;lpar;',               '(')
+		m.phtml	= Strtran(m.phtml, '&amp;lowbar;',             '_')
+		m.phtml	= Strtran(m.phtml, '&amp;ldquo;',              '“')
+		m.phtml	= Strtran(m.phtml, '&amp;lcub;',               '{')
+		m.phtml	= Strtran(m.phtml, '&amp;lbrack;',             '[')
+		m.phtml	= Strtran(m.phtml, '&amp;lbrace;',             '{')
+		m.phtml	= Strtran(m.phtml, '&amp;laquo;',              '«')
+		m.phtml	= Strtran(m.phtml, '&amp;laquo',               '«')
+
+	Endif
+
+	If '&amp;I' $ m.uhtml
+
+		m.phtml	= Strtran(m.phtml, '&amp;Iuml;',               'Ï')
+		m.phtml	= Strtran(m.phtml, '&amp;iuml;',               'ï')
+		m.phtml	= Strtran(m.phtml, '&amp;Iuml',                'Ï')
+		m.phtml	= Strtran(m.phtml, '&amp;iuml',                'ï')
+		m.phtml	= Strtran(m.phtml, '&amp;iquest;',             '¿')
+		m.phtml	= Strtran(m.phtml, '&amp;iquest',              '¿')
+		m.phtml	= Strtran(m.phtml, '&amp;Igrave;',             'Ì')
+		m.phtml	= Strtran(m.phtml, '&amp;igrave;',             'ì')
+		m.phtml	= Strtran(m.phtml, '&amp;Igrave',              'Ì')
+		m.phtml	= Strtran(m.phtml, '&amp;igrave',              'ì')
+		m.phtml	= Strtran(m.phtml, '&amp;iexcl;',              '¡')
+		m.phtml	= Strtran(m.phtml, '&amp;iexcl',               '¡')
+		m.phtml	= Strtran(m.phtml, '&amp;Icirc;',              'Î')
+		m.phtml	= Strtran(m.phtml, '&amp;icirc;',              'î')
+		m.phtml	= Strtran(m.phtml, '&amp;Icirc',               'Î')
+		m.phtml	= Strtran(m.phtml, '&amp;icirc',               'î')
+		m.phtml	= Strtran(m.phtml, '&amp;Iacute;',             'Í')
+		m.phtml	= Strtran(m.phtml, '&amp;iacute;',             'í')
+		m.phtml	= Strtran(m.phtml, '&amp;Iacute',              'Í')
+		m.phtml	= Strtran(m.phtml, '&amp;iacute',              'í')
+
+	Endif
+
+	If '&amp;H' $ m.uhtml
+
+		m.phtml	= Strtran(m.phtml, '&amp;hellip;',             '…')
+		m.phtml	= Strtran(m.phtml, '&amp;Hat;',                '^')
+		m.phtml	= Strtran(m.phtml, '&amp;half;',               '½')
+
+	Endif
+
+	If '&amp;G' $ m.uhtml
+
+		m.phtml	= Strtran(m.phtml, '&amp;GT;',                 '&gt;')
+		m.phtml	= Strtran(m.phtml, '&amp;gt;',                 '&gt;')
+		m.phtml	= Strtran(m.phtml, '&amp;GT',                  '&gt;')
+		m.phtml	= Strtran(m.phtml, '&amp;gt',                  '&gt;')
+		m.phtml	= Strtran(m.phtml, '&amp;grave;',              '`')
+
+	Endif
+
+	If '&amp;F' $ m.uhtml
+
+		m.phtml	= Strtran(m.phtml, '&amp;frac34;',             '¾')
+		m.phtml	= Strtran(m.phtml, '&amp;frac34',              '¾')
+		m.phtml	= Strtran(m.phtml, '&amp;frac14;',             '¼')
+		m.phtml	= Strtran(m.phtml, '&amp;frac14',              '¼')
+		m.phtml	= Strtran(m.phtml, '&amp;frac12;',             '½')
+		m.phtml	= Strtran(m.phtml, '&amp;frac12',              '½')
+
+	Endif
+
+	If '&amp;E' $ m.uhtml
+
+		m.phtml	= Strtran(m.phtml, '&amp;excl;',               '!')
+		m.phtml	= Strtran(m.phtml, '&amp;euro;',               '€')
+		m.phtml	= Strtran(m.phtml, '&amp;Euml;',               'Ë')
+		m.phtml	= Strtran(m.phtml, '&amp;euml;',               'ë')
+		m.phtml	= Strtran(m.phtml, '&amp;Euml',                'Ë')
+		m.phtml	= Strtran(m.phtml, '&amp;euml',                'ë')
+		m.phtml	= Strtran(m.phtml, '&amp;ETH;',                'Ð')
+		m.phtml	= Strtran(m.phtml, '&amp;eth;',                'ð')
+		m.phtml	= Strtran(m.phtml, '&amp;ETH',                 'Ð')
+		m.phtml	= Strtran(m.phtml, '&amp;eth',                 'ð')
+		m.phtml	= Strtran(m.phtml, '&amp;equals;',             '=')
+		m.phtml	= Strtran(m.phtml, '&amp;Egrave;',             'È')
+		m.phtml	= Strtran(m.phtml, '&amp;egrave;',             'è')
+		m.phtml	= Strtran(m.phtml, '&amp;Egrave',              'È')
+		m.phtml	= Strtran(m.phtml, '&amp;egrave',              'è')
+		m.phtml	= Strtran(m.phtml, '&amp;Ecirc;',              'Ê')
+		m.phtml	= Strtran(m.phtml, '&amp;ecirc;',              'ê')
+		m.phtml	= Strtran(m.phtml, '&amp;Ecirc',               'Ê')
+		m.phtml	= Strtran(m.phtml, '&amp;ecirc',               'ê')
+		m.phtml	= Strtran(m.phtml, '&amp;Eacute;',             'É')
+		m.phtml	= Strtran(m.phtml, '&amp;eacute;',             'é')
+		m.phtml	= Strtran(m.phtml, '&amp;Eacute',              'É')
+		m.phtml	= Strtran(m.phtml, '&amp;eacute',              'é')
+
+	Endif
+
+	If '&amp;D' $ m.uhtml
+
+		m.phtml	= Strtran(m.phtml, '&amp;DoubleDot;',          '¨')
+		m.phtml	= Strtran(m.phtml, '&amp;Dot;',                '¨')
+		m.phtml	= Strtran(m.phtml, '&amp;dollar;',             '$')
+		m.phtml	= Strtran(m.phtml, '&amp;divide;',             '÷')
+		m.phtml	= Strtran(m.phtml, '&amp;divide',              '÷')
+		m.phtml	= Strtran(m.phtml, '&amp;div;',                '÷')
+		m.phtml	= Strtran(m.phtml, '&amp;die;',                '¨')
+		m.phtml	= Strtran(m.phtml, '&amp;DiacriticalGrave;',   '`')
+		m.phtml	= Strtran(m.phtml, '&amp;DiacriticalAcute;',   '´')
+		m.phtml	= Strtran(m.phtml, '&amp;deg;',                '°')
+		m.phtml	= Strtran(m.phtml, '&amp;deg',                 '°')
+
+	Endif
+
+	If '&amp;C' $ m.uhtml
+
+		m.phtml	= Strtran(m.phtml, '&amp;curren;',             '¤')
+		m.phtml	= Strtran(m.phtml, '&amp;curren',              '¤')
+		m.phtml	= Strtran(m.phtml, '&amp;COPY;',               '©')
+		m.phtml	= Strtran(m.phtml, '&amp;copy;',               '©')
+		m.phtml	= Strtran(m.phtml, '&amp;COPY',                '©')
+		m.phtml	= Strtran(m.phtml, '&amp;copy',                '©')
+		m.phtml	= Strtran(m.phtml, '&amp;commat;',             '@')
+		m.phtml	= Strtran(m.phtml, '&amp;comma;',              ',')
+		m.phtml	= Strtran(m.phtml, '&amp;colon;',              ':')
+		m.phtml	= Strtran(m.phtml, '&amp;circledR;',           '®')
+		m.phtml	= Strtran(m.phtml, '&amp;CenterDot;',          '·')
+		m.phtml	= Strtran(m.phtml, '&amp;centerdot;',          '·')
+		m.phtml	= Strtran(m.phtml, '&amp;cent;',               '¢')
+		m.phtml	= Strtran(m.phtml, '&amp;cent',                '¢')
+		m.phtml	= Strtran(m.phtml, '&amp;Cedilla;',            '¸')
+		m.phtml	= Strtran(m.phtml, '&amp;cedil;',              '¸')
+		m.phtml	= Strtran(m.phtml, '&amp;cedil',               '¸')
+		m.phtml	= Strtran(m.phtml, '&amp;Ccedil;',             'Ç')
+		m.phtml	= Strtran(m.phtml, '&amp;ccedil;',             'ç')
+		m.phtml	= Strtran(m.phtml, '&amp;Ccedil',              'Ç')
+		m.phtml	= Strtran(m.phtml, '&amp;ccedil',              'ç')
+
+	Endif
+
+	If '&amp;B' $ m.uhtml
+
+		m.phtml	= Strtran(m.phtml, '&amp;bull;',               '•')
+		m.phtml	= Strtran(m.phtml, '&amp;bsol;',               '\')
+		m.phtml	= Strtran(m.phtml, '&amp;brvbar;',             '¦')
+		m.phtml	= Strtran(m.phtml, '&amp;brvbar',              '¦')
+
+	Endif
+
+	If '&amp;A' $ m.uhtml
+
+		m.phtml	= Strtran(m.phtml, '&amp;Auml;',               'Ä')
+		m.phtml	= Strtran(m.phtml, '&amp;auml;',               'ä')
+		m.phtml	= Strtran(m.phtml, '&amp;Auml',                'Ä')
+		m.phtml	= Strtran(m.phtml, '&amp;auml',                'ä')
+		m.phtml	= Strtran(m.phtml, '&amp;Atilde;',             'Ã')
+		m.phtml	= Strtran(m.phtml, '&amp;atilde;',             'ã')
+		m.phtml	= Strtran(m.phtml, '&amp;Atilde',              'Ã')
+		m.phtml	= Strtran(m.phtml, '&amp;atilde',              'ã')
+		m.phtml	= Strtran(m.phtml, '&amp;ast;',                '*')
+		m.phtml	= Strtran(m.phtml, '&amp;Aring;',              'Å')
+		m.phtml	= Strtran(m.phtml, '&amp;aring;',              'å')
+		m.phtml	= Strtran(m.phtml, '&amp;Aring',               'Å')
+		m.phtml	= Strtran(m.phtml, '&amp;aring',               'å')
+		m.phtml	= Strtran(m.phtml, '&amp;apos;',               "'")
+		m.phtml	= Strtran(m.phtml, '&amp;angst;',              'Å')
+		m.phtml	= Strtran(m.phtml, '&amp;alpha;',              'a')
+		m.phtml	= Strtran(m.phtml, '&amp;Agrave;',             'À')
+		m.phtml	= Strtran(m.phtml, '&amp;agrave;',             'à')
+		m.phtml	= Strtran(m.phtml, '&amp;Agrave',              'À')
+		m.phtml	= Strtran(m.phtml, '&amp;agrave',              'à')
+		m.phtml	= Strtran(m.phtml, '&amp;AElig;',              'Æ')
+		m.phtml	= Strtran(m.phtml, '&amp;aelig;',              'æ')
+		m.phtml	= Strtran(m.phtml, '&amp;AElig',               'Æ')
+		m.phtml	= Strtran(m.phtml, '&amp;aelig',               'æ')
+		m.phtml	= Strtran(m.phtml, '&amp;acute;',              '´')
+		m.phtml	= Strtran(m.phtml, '&amp;acute',               '´')
+		m.phtml	= Strtran(m.phtml, '&amp;Acirc;',              'Â')
+		m.phtml	= Strtran(m.phtml, '&amp;acirc;',              'â')
+		m.phtml	= Strtran(m.phtml, '&amp;Acirc',               'Â')
+		m.phtml	= Strtran(m.phtml, '&amp;acirc',               'â')
+		m.phtml	= Strtran(m.phtml, '&amp;Aacute;',             'Á')
+		m.phtml	= Strtran(m.phtml, '&amp;aacute;',             'á')
+		m.phtml	= Strtran(m.phtml, '&amp;Aacute',              'Á')
+		m.phtml	= Strtran(m.phtml, '&amp;aacute',              'á')
+
+	Endif
+
+Endif
+
+*!* NOW CONVERT UTF-8 TO ANSI, IF REQUIRED
+
+#Define CP_UTF8					65001       &amp;&amp; UTF-8 translation
+#Define MB_PRECOMPOSED			0x00000001  &amp;&amp; use precomposed chars
+#Define MB_COMPOSITE			0x00000002  &amp;&amp; use composite chars
+#Define MB_USEGLYPHCHARS		0x00000004  &amp;&amp; use glyph chars, not ctrl chars
+#Define MB_ERR_INVALID_CHARS	0x00000008  &amp;&amp; error for invalid chars
+
+
+If _apiMultiByteToWideChar(CP_UTF8, MB_ERR_INVALID_CHARS, m.phtml, Len(m.phtml), Null, 0) # 0 Then
+
+	m.phtml	= Strconv(m.phtml, 12)
+	m.phtml	= Strconv(m.phtml, 6)
+	m.phtml	= Strconv(m.phtml, 2)
+
+Endif
+
+Return m.phtml
+ENDPROC
+PROCEDURE htmltidy
+*!* HTMLTIDY
+
+Lparameters phtml
+
+m.phtml = '' + Alltrim(m.phtml)
+
+If Not Empty(m.phtml) Then
+
+	m.phtml = Chrtran(m.phtml, 0h0d0a09, ' ')
+
+	Do While Space(2) $ m.phtml
+
+		m.phtml = Strtran(m.phtml, Space(2), Space(1))
+
+	Enddo
+
+	m.phtml	= Strtran(m.phtml, '{ ', '{')
+	m.phtml	= Strtran(m.phtml, '} ', '}')
+	m.phtml	= Strtran(m.phtml, ' {', '{')
+	m.phtml	= Strtran(m.phtml, ' }', '}')
+
+	m.phtml	= Strtran(m.phtml, '" /&gt;', '"/&gt;')
+
+	m.phtml	= Strtran(m.phtml, "' /&gt;", "'/&gt;")
+
+	m.phtml	= Strtran(m.phtml, ' &gt;', '&gt;')
+	m.phtml	= Strtran(m.phtml, '&gt; ', '&gt;')
+	m.phtml	= Strtran(m.phtml, ' &lt;', '&lt;')
+	m.phtml	= Strtran(m.phtml, '&lt; ', '&lt;')
+
+Endif
+
+Return m.phtml
+
+
+
+
+
+
+
+ENDPROC
+PROCEDURE onerror
+*!* ONERROR
+
+Lparameters pErrorNumber, pErrorDescription
+
+ENDPROC
+PROCEDURE onresponsedataavailable
+*!* ONRESPONSEDATAAVAILABLE
+
+Lparameters pData
+
+
+ENDPROC
+PROCEDURE onresponsefinished
+*!* ONRESPONSEFINISHED
+ENDPROC
+PROCEDURE onresponsestart
+*!* ONRESPONSESTART
+
+Lparameters pStatus, pContentType
+
+ENDPROC
+PROCEDURE open
+*!* OPEN
+
+*!*	The Open method opens an HTTP connection to an HTTP resource.
+
+*!*	Parameters
+*!*	Method [in]
+*!*	Specifies the HTTP verb used for the Open method, such as "GET" or "PUT".
+*!*	Always use uppercase as some servers ignore lowercase HTTP verbs.
+*!*	Url [in]
+*!*	Specifies the name of the resource. This must be an absolute URL.
+*!*	Async [in, optional]
+*!*	Indicates whether to open in asynchronous mode.
+*!*	Value	Meaning
+*!*	VARIANT_FALSE
+*!*	Opens the HTTP connection in synchronous mode. A call to Send does not return
+*!*	until WinHTTP has completely received the response.
+*!*	VARIANT_TRUE
+*!*	Opens the HTTP connection in asynchronous mode.
+*!*
+*!*	Return value
+*!*	None
+
+*!*	Remarks
+*!*	This method opens a connection to the resource identified in Url using the HTTP verb given in Method.
+
+*!* HTTP VERBS: GET, POST, PUT, DELETE, HEAD, OPTIONS, TRACE
+
+Lparameters pMethod As String, pUrl As String, pAsync
+
+Local result
+
+m.pMethod = Alltrim(m.pMethod)
+m.pUrl	  = Alltrim(m.pUrl)
+
+*!*	If m.pAsync = .T.
+If This.Eventhandler = .F. Then
+	Eventhandler(This.WinHttpRequest, This.WinHttpRequestEvents)
+	This.Eventhandler = .T.
+Endif
+
+*!*	Else
+*!*		If This.Eventhandler = .T. Then
+*!*			Eventhandler(This.WinHttpRequest, This.WinHttpRequestEvents, .T.)
+*!*			This.Eventhandler = .F.
+*!*		Endif
+*!*	Endif
+
+
+Try
+	m.result = This.WinHttpRequest.Open(m.pMethod, m.pUrl, m.pAsync)
+Catch
+	m.result = .F.
+Endtry
+
+Return m.result
+
+
+ENDPROC
+PROCEDURE option_enablecertificaterevocationcheck_access
+Return This.WinHttpRequest.Option(18)
+ENDPROC
+PROCEDURE option_enablecertificaterevocationcheck_assign
+Lparameters tOption_EnableCertificateRevocationCheck
+
+This.WinHttpRequest.Option(18) = m.tOption_EnableCertificateRevocationCheck
+
+ENDPROC
+PROCEDURE option_enablehttp1_1_access
+Return This.WinHttpRequest.Option(17)
+
+ENDPROC
+PROCEDURE option_enablehttp1_1_assign
+Lparameters tOption_EnableHttp1_1
+
+This.WinHttpRequest.Option(17) = m.tOption_EnableHttp1_1
+
+ENDPROC
+PROCEDURE option_enablehttpstohttpredirects_access
+Return This.WinHttpRequest.Option(12)
+
+ENDPROC
+PROCEDURE option_enablehttpstohttpredirects_assign
+Lparameters tOption_EnableHttpsToHttpRedirects
+
+This.WinHttpRequest.Option(12) = m.tOption_EnableHttpsToHttpRedirects
+
+ENDPROC
+PROCEDURE option_enablepassportauthentication_access
+Return This.WinHttpRequest.Option(13)
+
+ENDPROC
+PROCEDURE option_enablepassportauthentication_assign
+Lparameters tOption_EnablePassportAuthentication
+
+This.WinHttpRequest.Option(13) = m.tOption_EnablePassportAuthentication
+
+ENDPROC
+PROCEDURE option_enableredirects_access
+Return This.WinHttpRequest.Option(6)
+
+ENDPROC
+PROCEDURE option_enableredirects_assign
+Lparameters tOption_EnableRedirects
+
+This.WinHttpRequest.Option(6) = m.tOption_EnableRedirects
+
+ENDPROC
+PROCEDURE option_enabletracing_access
+Return This.WinHttpRequest.Option(10)
+
+ENDPROC
+PROCEDURE option_enabletracing_assign
+Lparameters tOption_EnableTracing
+
+This.WinHttpRequest.Option(10) = m.tOption_EnableTracing
+
+ENDPROC
+PROCEDURE option_escapepercentinurl_access
+Return This.WinHttpRequest.Option(3)
+
+ENDPROC
+PROCEDURE option_escapepercentinurl_assign
+Lparameters tOption_EscapePercentInURL
+
+This.WinHttpRequest.Option(3) = m.tOption_EscapePercentInURL
+
+ENDPROC
+PROCEDURE option_maxautomaticredirects_access
+Return This.WinHttpRequest.Option(14)
+
+ENDPROC
+PROCEDURE option_maxautomaticredirects_assign
+Lparameters tOption_MaxAutomaticRedirects
+
+This.WinHttpRequest.Option(14) = m.tOption_MaxAutomaticRedirects
+
+ENDPROC
+PROCEDURE option_maxresponsedrainsize_access
+Return This.WinHttpRequest.Option(16)
+
+ENDPROC
+PROCEDURE option_maxresponsedrainsize_assign
+Lparameters tOption_MaxResponseDrainSize
+
+This.WinHttpRequest.Option(16) = m.tOption_MaxResponseDrainSize
+
+ENDPROC
+PROCEDURE option_maxresponseheadersize_access
+Return This.WinHttpRequest.Option(15)
+
+ENDPROC
+PROCEDURE option_maxresponseheadersize_assign
+Lparameters tOption_MaxResponseHeaderSize
+
+This.WinHttpRequest.Option(15) = m.tOption_MaxResponseHeaderSize
+
+ENDPROC
+PROCEDURE option_revertimpersonationoverssl_access
+Return This.WinHttpRequest.Option(11)
+
+ENDPROC
+PROCEDURE option_revertimpersonationoverssl_assign
+Lparameters tOption_RevertImpersonationOverSsl
+
+This.WinHttpRequest.Option(11) = m.tOption_RevertImpersonationOverSsl
+
+ENDPROC
+PROCEDURE option_secureprotocols_access
+*!* ERROR: OLE error code 0x80070057: Unknown COM status code.
+
+*!* Return This.WinHttpRequest.Option(9)
+
+Local result
+
+Try
+	m.result = This.WinHttpRequest.Option(9)
+Catch
+	m.result = 0
+Endtry
+
+Return m.result
+
+ENDPROC
+PROCEDURE option_secureprotocols_assign
+Lparameters tOption_SecureProtocols
+
+This.WinHttpRequest.Option(9) = m.tOption_SecureProtocols
+
+ENDPROC
+PROCEDURE option_selectcertificate_access
+*!* OLE error code 0x80070057: Unknown COM status code.
+
+*!* Return This.WinHttpRequest.Option(5)
+
+Return ''
+
+ENDPROC
+PROCEDURE option_selectcertificate_assign
+Lparameters tOption_SelectCertificate
+
+This.WinHttpRequest.Option(5) = m.tOption_SelectCertificate
+
+ENDPROC
+PROCEDURE option_sslerrorignoreflags_access
+Return This.WinHttpRequest.Option(4)
+
+ENDPROC
+PROCEDURE option_sslerrorignoreflags_assign
+Lparameters tOption_SslErrorIgnoreFlags
+
+This.WinHttpRequest.Option(4) = m.tOption_SslErrorIgnoreFlags
+
+ENDPROC
+PROCEDURE option_url_access
+*!* option_url_access
+
+Local result
+
+Try
+	m.result = This.WinHttpRequest.Option(1)
+Catch
+	m.result = ''
+Endtry
+
+Return m.result
+ENDPROC
+PROCEDURE option_url_assign
+Lparameters tOption_URL
+
+*!* READ ONLY PROPERTY. IGNORE ASSIGN
+
+ENDPROC
+PROCEDURE option_urlcodepage_access
+Return This.WinHttpRequest.Option(2)
+
+ENDPROC
+PROCEDURE option_urlcodepage_assign
+Lparameters tOption_URLCodePage
+
+This.WinHttpRequest.Option(2) = m.tOption_URLCodePage
+
+ENDPROC
+PROCEDURE option_urlescapedisable_access
+Return This.WinHttpRequest.Option(7)
+
+ENDPROC
+PROCEDURE option_urlescapedisable_assign
+Lparameters toption_urlescapedisable
+
+This.WinHttpRequest.Option(7) = m.toption_urlescapedisable
+
+ENDPROC
+PROCEDURE option_urlescapedisablequery_access
+Return This.WinHttpRequest.Option(8)
+
+ENDPROC
+PROCEDURE option_urlescapedisablequery_assign
+Lparameters tOption_UrlEscapeDisableQuery
+
+This.WinHttpRequest.Option(8) = m.tOption_UrlEscapeDisableQuery
+
+ENDPROC
+PROCEDURE option_useragentstring_access
+Return This.WinHttpRequest.Option(0)
+ENDPROC
+PROCEDURE option_useragentstring_assign
+Lparameters toption_useragentstring
+
+This.WinHttpRequest.Option(0) = m.toption_useragentstring
+
+ENDPROC
+PROCEDURE responsebody_access
+*!* The ResponseBody property retrieves the response entity body as an array of unsigned bytes.
+
+*!*	This property returns the response data in an array of unsigned bytes.
+*!*	If the response does not have a response body, an empty variant is returned.
+*!*	This property can only be invoked after the Send method has been called.
+
+Local result
+
+Try
+
+m.result = This.WinHttpRequest.ResponseBody
+
+*!* WHEN THE RESPONSEBODY IF EMPTY, THE RETURN VALUE IS NULL
+
+If Vartype(m.result) # 'Q' Then
+
+m.result = 0h
+
+Endif
+
+Catch
+
+m.result = 0h
+
+Endtry
+
+Return m.result
+
+ENDPROC
+PROCEDURE responsestream_access
+*!* The ResponseStream property retrieves the response entity body as an IStream.
+
+*!*	Call QueryInterface on the returned pointer to obtain a pointer to an IStream interface.
+*!*	This property returns the response data as an IStream. This property can only be invoked after
+*!*	the Send method has been called.
+
+Local result
+
+Try
+	m.result = This.WinHttpRequest.ResponseStream
+Catch
+	m.result = 0
+Endtry
+
+Return m.result
+
+ENDPROC
+PROCEDURE responsetext_access
+*!* The ResponseText property retrieves the response entity body as text.
+
+*!*	This property can only be invoked after the Send method has been called.
+*!*	When using this property in synchronous mode, the limit to the number of
+*!*	characters it returns is approximately 2,169,895.
+
+Local result
+
+Try
+	m.result = This.WinHttpRequest.ResponseText
+Catch
+	m.result = ''
+Endtry
+
+Return m.result
+
+ENDPROC
+PROCEDURE rfc822todatetime
+*!* RFC822TODATETIME
+
+*!* Tue, 01 Sep 2015 20:09:44 GMT
+*!* Wed, 09 Sep 2015 22:49:27 GMT
+*!* Wed, 09 September 2015 23:12:43 GMT
+*!* Wed, 19 Dec 2007 10:48:46 PST
+*!* Thu, 10 Sep 2015 01:36:36 +0000
+*!* 2015-09-09T22:55:29-04:00			25 chars
+*!* 2015-09-16T12:14-0400				21 chars
+
+Lparameters strdate
+
+Local cdate, coffset, ldatetime, ndd, ndm, ndy, noffset, nth, ntm, nts
+
+m.cdate = Alltrim(m.strdate)
+
+m.ldatetime = {//::}
+
+Do Case
+
+	Case ',' $ m.cdate
+
+		m.ndy = Val(Getwordnum(m.cdate, 4))
+		m.ndm = (At(Upper(Left(Getwordnum(m.cdate, 3), 3)), 'JANFEBMARAPRMAYJUNJULAUGSEPOCTNOVDEC') + 2) / 3
+		m.ndd = Val(Getwordnum(m.cdate, 2))
+		m.nth = Val(Getwordnum(Getwordnum(m.cdate, 5), 1, ':'))
+		m.ntm = Val(Getwordnum(Getwordnum(m.cdate, 5), 2, ':'))
+		m.nts = Val(Getwordnum(Getwordnum(m.cdate, 5), 3, ':'))
+
+	Case Substr(m.cdate, 11, 1) == 'T'
+
+		*!* 2015-09-09T22:55:29-04:00			25 chars
+		*!* 2015-09-16T12:14-0400				21 chars
+		*!* 2015-08-24T17:50:26.000Z
+
+		m.ndy = Val(Substr(m.cdate, 1, 4))
+		m.ndm = Val(Substr(m.cdate, 6, 2))
+		m.ndd = Val(Substr(m.cdate, 9, 2))
+		m.nth = Val(Substr(m.cdate, 12, 2))
+		m.ntm = Val(Substr(m.cdate, 15, 2))
+
+		If Substr(m.cdate, 17, 1) = ':'
+
+			m.nts = Val(Substr(m.cdate, 18, 2))
+
+		Else
+
+			m.nts = 0
+
+		Endif
+
+Endcase
+
+*!* NORMALIZE TIMEZONE INFO
+
+m.cdate	= Strtran(m.cdate, 'Z',   '+0000')
+m.cdate	= Strtran(m.cdate, 'UT',  '+0000')
+m.cdate	= Strtran(m.cdate, 'GMT', '+0000')
+m.cdate	= Strtran(m.cdate, 'EST', '-0500')
+m.cdate	= Strtran(m.cdate, 'EDT', '-0400')
+m.cdate	= Strtran(m.cdate, 'CST', '-0600')
+m.cdate	= Strtran(m.cdate, 'CDT', '-0500')
+m.cdate	= Strtran(m.cdate, 'MST', '-0700')
+m.cdate	= Strtran(m.cdate, 'MDT', '-0600')
+m.cdate	= Strtran(m.cdate, 'PST', '-0800')
+m.cdate	= Strtran(m.cdate, 'PDT', '-0700')
+
+
+*!* CALCULATE TIMEZONE WITH ":" AND WITHOUT
+
+If Substr(m.cdate, Len(m.cdate) - 2, 1) = ':' Then
+
+	m.coffset = Chrtran(Right(m.cdate, 6), ':', '')
+
+Else
+
+	m.coffset = Right(m.cdate, 5)
+
+Endif
+
+m.noffset = Val(Substr(m.coffset, 2, 2)) * 3600 + Val(Substr(m.coffset, 4, 2)) * 60
+
+If Left(m.coffset, 1) = '-' Then
+
+	m.noffset = m.noffset * (-1)
+
+Endif
+
+
+Do Case
+
+	Case m.ndy &lt; 1950
+		m.ldatetime = {//::}
+
+	Case m.ndm &gt; 12
+		m.ldatetime = {//::}
+
+	Case m.ndd &gt; 31
+		m.ldatetime = {//::}
+
+	Case m.nth &gt; 23
+		m.ldatetime = {//::}
+
+	Case m.ntm &gt; 59
+		m.ldatetime = {//::}
+
+	Case m.nts &gt; 59
+		m.ldatetime = {//::}
+
+	Otherwise
+		m.ldatetime = Datetime(m.ndy, m.ndm, m.ndd, m.nth, m.ntm, m.nts) + m.noffset
+
+Endcase
+
+*!* Strtofile(m.strdate + '|' + Ttoc(m.ldatetime) + 0h0d0a, "C:\VFPPA\VOAT\voat.log.dates.txt", 1)
+
+Return m.ldatetime
+
+*!* 2015-09-09T22:55:29-04:00
+
+
+
+*!*	 zone        =  "UT"  / "GMT"                ; Universal Time
+*!*	                                                 ; North American : UT
+*!*	                 /  "EST" / "EDT"                ;  Eastern:  - 5/ - 4
+*!*	                 /  "CST" / "CDT"                ;  Central:  - 6/ - 5
+*!*	                 /  "MST" / "MDT"                ;  Mountain: - 7/ - 6
+*!*	                 /  "PST" / "PDT"                ;  Pacific:  - 8/ - 7
+*!*	                 /  1ALPHA                       ; Military: Z = UT;
+*!*	                                                 ;  A:-1; (J not used)
+*!*	                                                 ;  M:-12; N:+1; Y:+12
+*!*	                 / ( ("+" / "-") 4DIGIT )        ; Local differential
+*!*                                                  ;  hours+min. (HHMM)
+ENDPROC
+PROCEDURE send
+*!* SEND
+
+*!*	The Send method sends an HTTP request to an HTTP server.
+
+*!*	Parameters
+*!*	Body [in, optional]
+*!*	Data to be sent to the server.
+
+*!*	Return value
+*!*	None
+
+*!*	Remarks
+*!*	The request to be sent was defined in a prior call to the Open method.
+*!*	The calling application can provide data to be sent to the server through
+*!*	the Body parameter. If the HTTP verb of the object's Open is "GET",
+*!*	this method sends the request without Body, even if it is provided by the calling application.
+
+Lparameters pBody
+
+Local result
+
+*!* CONVERT STRING TO BINARY TYPE
+
+If Vartype(m.pBody) $ 'CQ' Then
+	m.pBody = Createbinary(m.pBody)
+Else
+	m.pBody = Null
+Endif
+
+Try
+	This.WinHttpRequest.Send(m.pBody)
+	m.result = .T.
+Catch
+	m.result = .F.
+Endtry
+
+Return m.result
+
+ENDPROC
+PROCEDURE setautologonpolicy
+*!* SETAUTOLOGONPOLICY
+
+*!*	The SetAutoLogonPolicy method sets the current Automatic Logon Policy.
+
+*!*	Parameters
+*!*	AutoLogonPolicy [in]
+*!*	Specifies the current automatic logon policy.
+
+*!*	Return value
+*!*	None
+
+*!*	Remarks
+*!*	The default policy is AutoLogonPolicy_OnlyIfBypassProxy.
+*!*	Call SetAutoLogonPolicy to set the automatic logon policy before calling Send to send the request.
+
+Lparameters pAutoLogonPolicy
+
+Return This.WinHttpRequest.SetAutoLogonPolicy(m.pAutoLogonPolicy)
+
+ENDPROC
+PROCEDURE setclientcertificate
+*!* SETCLIENTCERTIFICATE
+
+*!*	The SetClientCertificate method selects a client certificate to send to a Secure Hypertext
+*!*	Transfer Protocol (HTTPS) server.
+
+*!*	Parameters
+*!*	ClientCertificate [in]
+*!*	Specifies the location, certificate store, and subject of a client certificate.
+
+*!*	Return value
+*!*	None
+
+*!*	Remarks
+*!*	The string specified in the ClientCertificate parameter consists of the certificate location,
+*!*	certificate store, and subject name delimited by backslashes. For more information about the
+*!*	components of the certificate string, see Client Certificates.
+*!*	The certificate store name and location are optional. However, if you specify a certificate
+*!*	store, you must also specify the location of that certificate store. The default location is
+*!*	CURRENT_USER and the default certificate store is "MY". A blank subject indicates that the
+*!*	first certificate in the certificate store should be used.
+*!*	Call SetClientCertificate to select a certificate before calling Send to send the request.
+*!*	Microsoft Windows HTTP Services (WinHTTP) does not provide client certificates to proxy servers
+*!*	that request certificates for authentication.
+
+Lparameters pClientCertificate As String
+
+Return This.WinHttpRequest.SetClientCertificate(m.pClientCertificate)
+
+ENDPROC
+PROCEDURE setcredentials
+*!* SETCREDENTIALS
+
+*!*	The SetCredentials method sets credentials to be used with an HTTP server, whether it
+*!*	is a proxy server or an originating server.
+
+*!*	Parameters
+*!*	UserName [in]
+*!*	Specifies the user name for authentication.
+*!*	Password [in]
+*!*	Specifies the password for authentication. This parameter is ignored if bstrUserName is NULL or missing.
+*!*	Flags [in]
+*!*	Specifies when IWinHttpRequest uses credentials. Can be one of the following values.
+*!*	Value	Meaning
+*!*	HTTPREQUEST_SETCREDENTIALS_FOR_SERVER
+*!*	Credentials are passed to a server.
+*!*	HTTPREQUEST_SETCREDENTIALS_FOR_PROXY
+*!*	Credentials are passed to a proxy.
+*!*	
+*!*	Return value
+*!*	None
+
+*!*	Remarks
+*!*	This method returns an error value if a call to Open has not completed successfully.
+*!*	It is assumed that some measure of interaction with a proxy server or origin server must
+*!*	occur before users can set credentials for the session. Moreover, until users know which
+*!*	authentication scheme(s) are supported, they cannot format the credentials.
+
+Lparameters pUserName As String, pPassword As String, pFlags As Number
+
+m.pUserName	= Alltrim(m.pUserName)
+m.pPassword	= Alltrim(m.pPassword)
+
+Return This.WinHttpRequest.SetCredentials(m.pUserName, m.pPassword, m.pFlags)
+
+
+ENDPROC
+PROCEDURE setproxy
+*!*	The SetProxy method sets proxy server information.
+
+*!*	Parameters
+*!*	ProxySetting [in]
+*!*	The flags that control this method. Can be one of the following values.
+*!*	Value	Meaning
+*!*	HTTPREQUEST_PROXYSETTING_DEFAULT
+*!*	Default proxy setting. Equivalent to HTTPREQUEST_PROXYSETTING_PRECONFIG.
+*!*	HTTPREQUEST_PROXYSETTING_PRECONFIG
+*!*	Indicates that the proxy settings should be obtained from the registry.
+*!*	This assumes that Proxycfg.exe has been run. If Proxycfg.exe has not been run
+*!*	and HTTPREQUEST_PROXYSETTING_PRECONFIG is specified, then the behavior is equivalent
+*!*	to HTTPREQUEST_PROXYSETTING_DIRECT.
+*!*	HTTPREQUEST_PROXYSETTING_DIRECT
+*!*	Indicates that all HTTP and HTTPS servers should be accessed directly. Use this
+*!*	command if there is no proxy server.
+*!*	HTTPREQUEST_PROXYSETTING_PROXY
+*!*	When HTTPREQUEST_PROXYSETTING_PROXY is specified, varProxyServer should be set
+*!*	to a proxy server string and varBypassList should be set to a domain bypass list
+*!*	string. This proxy configuration applies only to the current instance of the WinHttpRequest object.
+
+*!*	ProxyServer [in, optional]
+*!*	Set to a proxy server string when ProxySetting equals HTTPREQUEST_PROXYSETTING_PROXY.
+
+*!*	BypassList [in, optional]
+*!*	Set to a domain bypass list string when ProxySetting equals HTTPREQUEST_PROXYSETTING_PROXY.
+*!*	Return value
+*!*	none
+
+*!*	Remarks
+*!*	Enables the calling application to specify use of default proxy information
+*!*	(configured by the proxy configuration tool) or to override Proxycfg.exe.
+*!*	This method must be called before calling the Send method. If this method is
+*!*	called after the Send method, it has no effect.
+*!*	IWinHttpRequest passes these parameters to Microsoft Windows HTTP Services (WinHTTP).
+
+Lparameters pProxySetting, pProxyServer, pBypassList
+
+Local result
+
+If Vartype(m.pProxyServer) # 'C' Then
+
+	m.pProxyServer = ''
+
+Endif
+
+If Vartype(m.pBypassList) # 'C' Then
+
+	m.pBypassList = ''
+
+Endif
+
+Try
+
+	This.WinHttpRequest.SetProxy(m.pProxySetting, m.pProxyServer, m.pBypassList)
+
+	This.proxysetting = m.pProxySetting
+
+	This.proxyserver = m.pProxyServer
+
+	This.proxybypasslist = m.pBypassList
+
+	m.result = .T.
+
+Catch
+
+	m.result = .F.
+
+Endtry
+
+Return m.result
+
+
+
+
+
+ENDPROC
+PROCEDURE setrequestheader
+*!*	The SetRequestHeader method adds, changes, or deletes an HTTP request header.
+
+*!*	Parameters
+*!*	Header [in]
+*!*	Specifies the name of the header to be set, for example, "depth". This parameter should
+*!*	not contain a colon and must be the actual text of the HTTP header.
+*!*	Value [in]
+*!*	Specifies the value of the header, for example, "infinity".
+
+*!*	Return value
+*!*	None
+
+*!*	Remarks
+*!*	Headers are transferred across redirects. This can create a security vulnerability.
+*!*	To avoid having headers transferred if a redirect occurs, use the WINHTTP_STATUS_CALLBACK
+*!*	callback to correct the specific headers when a redirect occurs.
+*!*	The SetRequestHeader method enables the calling application to add or delete an HTTP request
+*!*	header prior to sending the request. The header name is given in Header, and the header token
+*!*	or value is given in Value. To add a header, supply a header name and value. If another header
+*!*	already exists with this name, it is replaced. To delete a header, set Header to the name of
+*!*	the header to delete and set Value to NULL.
+*!*	The name and value of request headers added with this method are validated. Headers must be
+*!*	well formed. For more information about valid HTTP headers, see RFC 2616. If an invalid header
+*!*	is used, an error occurs and the header is not added.
+
+Lparameters pHeader As String, pValue As String
+
+Local result
+
+m.pHeader = Alltrim(m.pHeader)
+m.pValue  = Alltrim(m.pValue)
+
+Try
+	This.WinHttpRequest.SetRequestHeader(m.pHeader, m.pValue)
+	m.result = .T.
+Catch
+	m.result = .F.
+Endtry
+
+Return m.result
+
+
+
+ENDPROC
+PROCEDURE settimeouts
+*!*	The SetTimeouts method specifies the individual time-out components of a send/receive operation, in milliseconds.
+
+*!*	Parameters
+
+*!*	ResolveTimeout [in]
+*!*	Time-out value applied when resolving a host name (such as www.microsoft.com) to an IP address
+*!*	(such as 192.168.131.199), in milliseconds. The default value is zero, meaning no time-out (infinite).
+*!*	If DNS timeout is specified using NAME_RESOLUTION_TIMEOUT, there is an overhead of one thread per request.
+
+*!*	ConnectTimeout [in]
+*!*	Time-out value applied when establishing a communication socket with the target server, in milliseconds.
+*!*	The default value is 60,000 (60 seconds).
+
+*!*	SendTimeout [in]
+*!*	Time-out value applied when sending an individual packet of request data on the communication socket to
+*!*	the target server, in milliseconds. A large request sent to an HTTP server are normally be broken up into
+*!*	multiple packets; the send time-out applies to sending each packet individually. The default value is 30,000 (30 seconds).
+
+*!*	ReceiveTimeout [in]
+*!*	Time-out value applied when receiving a packet of response data from the target server, in milliseconds.
+*!*	Large responses are be broken up into multiple packets; the receive time-out applies to fetching each
+*!*	packet of data off the socket. The default value is 30,000 (30 seconds).
+
+*!*	Return value
+*!*	None
+
+*!*	Remarks
+
+*!*	All parameters are required. A value of 0 or -1 sets a time-out to wait infinitely. A value greater
+*!*	than 0 sets the time-out value in milliseconds. For example, 30,000 would set the time-out to 30 seconds.
+*!*	All negative values other than -1 cause this method to fail.
+*!*	Time-out values are applied at the Winsock layer.
+
+Lparameters pResolveTimeout, pConnectTimeout, pSendTimeout, pReceiveTimeout
+
+If Vartype(m.pResolveTimeout) # 'N' Then
+
+m.pResolveTimeout = 0
+
+Endif
+
+If Vartype(m.pConnectTimeout) # 'N' Then
+
+m.pConnectTimeout = 60000
+
+Endif
+
+If Vartype(m.pSendTimeout) # 'N' Then
+
+m.pSendTimeout = 30000
+
+Endif
+
+If Vartype(m.pReceiveTimeout) # 'N' Then
+
+m.pReceiveTimeout = 30000
+
+Endif
+
+Return This.WinHttpRequest.SetTimeouts(m.pResolveTimeout, m.pConnectTimeout, m.pSendTimeout, m.pReceiveTimeout)
+
+ENDPROC
+PROCEDURE status_access
+*!* The Status property retrieves the HTTP status code from the last response.
+
+*!*	The results of this property are valid only after the Send method has successfully completed.
+*!*	For a list of status codes see HTTP Status Codes.
+
+*!*	HTTP_STATUS_CONTINUE 100
+*!*	The request can be continued.
+
+*!*	HTTP_STATUS_SWITCH_PROTOCOLS 101
+*!*	The server has switched protocols in an upgrade header.
+
+*!*	HTTP_STATUS_OK 200
+*!*	The request completed successfully.
+
+*!*	HTTP_STATUS_CREATED 201
+*!*	The request has been fulfilled and resulted in the creation of a new resource.
+
+*!*	HTTP_STATUS_ACCEPTED 202
+*!*	The request has been accepted for processing, but the processing has not been completed.
+
+*!*	HTTP_STATUS_PARTIAL 203
+*!*	The returned meta information in the entity-header is not the definitive set available
+*!*	from the originating server.
+
+*!*	HTTP_STATUS_NO_CONTENT 204
+*!*	The server has fulfilled the request, but there is no new information to send back.
+
+*!*	HTTP_STATUS_RESET_CONTENT 205
+*!*	The request has been completed, and the client program should reset the document view
+*!*	that caused the request to be sent to allow the user to easily initiate another input action.
+
+*!*	HTTP_STATUS_PARTIAL_CONTENT 206
+*!*	The server has fulfilled the partial GET request for the resource.
+
+*!*	HTTP_STATUS_WEBDAV_MULTI_STATUS 207
+*!*	During a World Wide Web Distributed Authoring and Versioning (WebDAV) operation, this
+*!*	indicates multiple status codes for a single response. The response body contains
+*!*	Extensible Markup Language (XML) that describes the status codes. For more information,
+*!*	see HTTP Extensions for Distributed Authoring.
+
+*!*	HTTP_STATUS_AMBIGUOUS 300
+*!*	The requested resource is available at one or more locations.
+
+*!*	HTTP_STATUS_MOVED 301
+*!*	The requested resource has been assigned to a new permanent Uniform Resource Identifier
+*!*	(URI), and any future references to this resource should be done using one of the returned URIs.
+
+*!*	HTTP_STATUS_REDIRECT 302
+*!*	The requested resource resides temporarily under a different URI.
+
+*!*	HTTP_STATUS_REDIRECT_METHOD 303
+*!*	The response to the request can be found under a different URI and should be retrieved
+*!*	using a GET HTTP verb on that resource.
+
+*!*	HTTP_STATUS_NOT_MODIFIED 304
+*!*	The requested resource has not been modified.
+
+*!*	HTTP_STATUS_USE_PROXY 305
+*!*	The requested resource must be accessed through the proxy given by the location field.
+
+*!*	HTTP_STATUS_REDIRECT_KEEP_VERB 307
+*!*	The redirected request keeps the same HTTP verb. HTTP/1.1 behavior.
+
+*!*	HTTP_STATUS_BAD_REQUEST 400
+*!*	The request could not be processed by the server due to invalid syntax.
+
+*!*	HTTP_STATUS_DENIED 401
+*!*	The requested resource requires user authentication.
+
+*!*	HTTP_STATUS_PAYMENT_REQ 402
+*!*	Not implemented in the HTTP protocol.
+
+*!*	HTTP_STATUS_FORBIDDEN 403
+*!*	The server understood the request, but cannot fulfill it.
+
+*!*	HTTP_STATUS_NOT_FOUND 404
+*!*	The server has not found anything that matches the requested URI.
+
+*!*	HTTP_STATUS_BAD_METHOD 405
+*!*	The HTTP verb used is not allowed.
+
+*!*	HTTP_STATUS_NONE_ACCEPTABLE 406
+*!*	No responses acceptable to the client were found.
+
+*!*	HTTP_STATUS_PROXY_AUTH_REQ 407
+*!*	Proxy authentication required.
+
+*!*	HTTP_STATUS_REQUEST_TIMEOUT 408
+*!*	The server timed out waiting for the request.
+
+*!*	HTTP_STATUS_CONFLICT 409
+*!*	The request could not be completed due to a conflict with the current state of the resource.
+*!*	The user should resubmit with more information.
+
+*!*	HTTP_STATUS_GONE 410
+*!*	The requested resource is no longer available at the server, and no forwarding address is known.
+
+*!*	HTTP_STATUS_LENGTH_REQUIRED 411
+*!*	The server cannot accept the request without a defined content length.
+
+*!*	HTTP_STATUS_PRECOND_FAILED 412
+*!*	The precondition given in one or more of the request header fields evaluated to false when
+*!*	it was tested on the server.
+
+*!*	HTTP_STATUS_REQUEST_TOO_LARGE 413
+*!*	The server cannot process the request because the request entity is larger than the server
+*!*	is able to process.
+
+*!*	HTTP_STATUS_URI_TOO_LONG 414
+*!*	The server cannot service the request because the request URI is longer than the server
+*!*	can interpret.
+
+*!*	HTTP_STATUS_UNSUPPORTED_MEDIA 415
+*!*	The server cannot service the request because the entity of the request is in a format not
+*!*	supported by the requested resource for the requested method.
+
+*!*	HTTP_STATUS_RETRY_WITH 449
+*!*	The request should be retried after doing the appropriate action.
+
+*!*	HTTP_STATUS_SERVER_ERROR 500
+*!*	The server encountered an unexpected condition that prevented it from fulfilling the request.
+
+*!*	HTTP_STATUS_NOT_SUPPORTED 501
+*!*	The server does not support the functionality required to fulfill the request.
+
+*!*	HTTP_STATUS_BAD_GATEWAY 502
+*!*	The server, while acting as a gateway or proxy, received an invalid response from the
+*!*	upstream server it accessed in attempting to fulfill the request.
+
+*!*	HTTP_STATUS_SERVICE_UNAVAIL 503
+*!*	The service is temporarily overloaded.
+
+*!*	HTTP_STATUS_GATEWAY_TIMEOUT 504
+*!*	The request was timed out waiting for a gateway.
+
+*!*	HTTP_STATUS_VERSION_NOT_SUP 505
+*!*	The server does not support the HTTP protocol version that was used in the request message.
+
+Local result
+
+Try
+	m.result = This.WinHttpRequest.Status
+Catch
+	m.result = 0
+Endtry
+
+Return m.result
+
+ENDPROC
+PROCEDURE statustext_access
+*!*	The StatusText property retrieves the HTTP status text.
+
+*!*	Retrieves the text portion of the server response line, making available the "user-friendly"
+*!*	equivalent to the numeric HTTP status code. The results of this property are valid only after
+*!*	the Send method has successfully completed.
+
+Local result
+
+Try
+	m.result = This.WinHttpRequest.StatusText
+Catch
+	m.result = ''
+Endtry
+
+Return m.result
+
+ENDPROC
+PROCEDURE urlconv
+*!* URLCONV
+
+Lparameters purl
+
+Return This.htmldecode(m.purl)
+ENDPROC
+PROCEDURE urldecode
+Lparameters purl
+
+Local cstr1, cstr2, lnx
+
+m.purl = Alltrim(m.purl)
+
+m.purl = This.htmldecode(m.purl)
+
+If Not Empty(m.purl) Then
+
+	For m.lnx = 32 To 36
+
+		m.cstr1	= '%' + Strconv(Chr(m.lnx), 15)
+
+		m.cstr2	= Chr(m.lnx)
+
+		m.purl = Strtran(m.purl, m.cstr1, m.cstr2)
+
+	Endfor
+
+	For m.lnx = 38 To 47
+
+		m.cstr1	= '%' + Strconv(Chr(m.lnx), 15)
+
+		m.cstr2	= Chr(m.lnx)
+
+		m.purl = Strtran(m.purl, m.cstr1, m.cstr2)
+
+	Endfor
+
+	For m.lnx = 58 To 64
+
+		m.cstr1	= '%' + Strconv(Chr(m.lnx), 15)
+
+		m.cstr2	= Chr(m.lnx)
+
+		m.purl = Strtran(m.purl, m.cstr1, m.cstr2)
+
+	Endfor
+
+	For m.lnx = 91 To 96
+
+		m.cstr1	= '%' + Strconv(Chr(m.lnx), 15)
+
+		m.cstr2	= Chr(m.lnx)
+
+		m.purl = Strtran(m.purl, m.cstr1, m.cstr2)
+
+	Endfor
+
+	For m.lnx = 123 To 255
+
+		m.cstr1	= '%' + Strconv(Chr(m.lnx), 15)
+
+		m.cstr2	= Chr(m.lnx)
+
+		m.purl = Strtran(m.purl, m.cstr1, m.cstr2)
+
+	Endfor
+
+	For m.lnx = 37 To 37
+
+		m.cstr1	= '%' + Strconv(Chr(m.lnx), 15)
+
+		m.cstr2	= Chr(m.lnx)
+
+		m.purl = Strtran(m.purl, m.cstr1, m.cstr2)
+
+	Endfor
+
+Endif
+
+Return m.purl
+
+
+
+
+
+
+
+
+
+ENDPROC
+PROCEDURE urlencode
+Lparameters purl
+
+Local cchar, curl, lnx
+
+m.purl = Alltrim(m.purl)
+
+m.curl = ''
+
+For m.lnx = 1 To Len(m.purl)
+
+	m.cchar = Substr(m.purl, m.lnx, 1)
+
+	If m.cchar $ 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._~/:'
+
+		m.curl = m.curl + m.cchar
+
+	Else
+
+		*** Convert others to Hex equivalents
+		m.curl = m.curl + '%' + Transform(0h + m.cchar)
+
+	Endif
+
+Endfor
+
+Return m.curl
+
+*!*	Unsafe:
+
+*!*	   Characters can be unsafe for a number of reasons.  The space
+*!*	   character is unsafe because significant spaces may disappear and
+*!*	   insignificant spaces may be introduced when URLs are transcribed or
+*!*	   typeset or subjected to the treatment of word-processing programs.
+*!*	   The characters "&lt;" and "&gt;" are unsafe because they are used as the
+*!*	   delimiters around URLs in free text; the quote mark (""") is used to
+*!*	   delimit URLs in some systems.  The character "#" is unsafe and should
+*!*	   always be encoded because it is used in World Wide Web and in other
+*!*	   systems to delimit a URL from a fragment/anchor identifier that might
+*!*	   follow it.  The character "%" is unsafe because it is used for
+*!*	   encodings of other characters.  Other characters are unsafe because
+*!*	   gateways and other transport agents are known to sometimes modify
+*!*	   such characters. These characters are "{", "}", "|", "\", "^", "~",
+*!*	   "[", "]", and "`".
+
+*!*	   All unsafe characters must always be encoded within a URL. For
+*!*	   example, the character "#" must be encoded within URLs even in
+*!*	   systems that do not normally deal with fragment or anchor
+*!*	   identifiers, so that if the URL is copied into another system that
+*!*	   does use them, it will not be necessary to change the URL encoding.
+ENDPROC
+PROCEDURE waitforresponse
+*!*	The WaitForResponse method waits for an asynchronous Send method to complete,
+*!*	with optional time-out value, in seconds.
+
+*!*	Parameters
+*!*	Timeout [in, optional]
+*!*	Time-out value, in seconds. Default time-out is infinite. To explicitly set time-out
+*!*	to infinite, use the value -1.
+*!*	Succeeded [out, retval]
+*!*	Receives one of the following values.
+*!*	Value	Meaning
+*!*	VARIANT_TRUE
+*!*	A response has been received.
+*!*	VARIANT_FALSE
+*!*	The specified time-out period was exceeded.
+
+*!*	Return value
+*!*	Logical
+
+*!*	Remarks
+*!*	This method suspends execution while waiting for a response to an asynchronous request.
+*!*	This method should be called after a Send. Calling applications can specify an optional
+*!*	Timeout value, in seconds. If this method times out, the request is not aborted. This way,
+*!*	the calling application can continue to wait for the request, if desired, in a subsequent
+*!*	call to this method.
+*!*	Calling this property after a synchronous Send method returns immediately and has no effect.
+
+Lparameters pTimeout
+
+*!* CHANGE RETURN VALUE TO NUMERIC FROM LOGICAL
+
+*!* RETURN 0 SEND METHOD NOT COMPLETE
+*!* RETURN 1 SEND METHOD COMPLETE
+*!* RETURN -1 TIMEOUT FOR SEND METHOD
+
+*!* TRY/CATCH STRUCTURE TO AVOID WINHTTP EXCEPTIONS
+
+Local Succeeded, result, returnvalue
+
+m.Succeeded = .F.
+
+Try
+
+m.result = This.WinHttpRequest.WaitForResponse(m.pTimeout, @m.Succeeded)
+
+If m.result = .F. Then
+
+m.returnvalue = 0
+
+Else
+
+m.returnvalue = 1
+
+Endif
+
+Catch
+
+*!* IF WE ARE HERE WE HAVE A TIMEOUT
+
+m.returnvalue = -1
+
+Endtry
+
+Return m.returnvalue
+
+ENDPROC
+</methods>
+		<objcode/>
+		<ole/>
+		<ole2/>
+		<reserved1>Class</reserved1>
+		<reserved2>1</reserved2>
+		<reserved3>responsebody Get response body as a safearray of UI1
+responsestream Get response body as a stream
+responsetext Get response body as a string
+status Get HTTP status code
+statustext Get HTTP status text
+eventhandler
+option_useragentstring Sets or retrieves a VARIANT that contains the user agent string.
+option_url Retrieves a VARIANT that contains the URL of the resource. This value is read-only. The URL cannot be read until the Open method is called. Useful for checking the URL after the Send method is finished to verify that any redirection occurred.
+option_urlcodepage Sets or retrieves a VARIANT that identifies the code page for the URL string. The default value is the UTF-8 code page. The code page is used to convert the Unicode URL string, passed in the Open method, to a single-byte string representation.
+option_escapepercentinurl Sets or retrieves a VARIANT that indicates whether percent characters in the URL string are converted to an escape sequence. Default TRUE which specifies all unsafe ANSI characters except the percent symbol are converted to an escape sequence.
+option_sslerrorignoreflags Sets or retrieves a VARIANT that indicates which server certificate errors should be ignored.
+option_selectcertificate Sets a VARIANT that specifies the client certificate that is sent to a server for authentication. This option indicates the location, certificate store, and subject of a client certificate delimited with backslashes. For more info, see SSL in WinHTTP.
+option_enableredirects Sets or retrieves a VARIANT that indicates whether requests are automatically redirected when the server specifies a new location for the resource. The default value of this option is VARIANT_TRUE to indicate that requests are automatically redirected.
+option_urlescapedisable Sets or retrieves a VARIANT that indicates whether unsafe characters in the path and query components of a URL are converted to escape sequences. The default value is TRUE, which specifies that characters in the path and query are converted.
+option_urlescapedisablequery Sets or retrieves a VARIANT that indicates whether unsafe characters in the query component of the URL are converted to escape sequences. The default value of this option is VARIANT_TRUE, which specifies that characters in the query are converted.
+option_secureprotocols Sets or retrieves a VARIANT that indicates which secure protocols can be used. This option selects the protocols acceptable to the client. The protocol is negotiated during the Secure Sockets Layer (SSL) handshake.
+option_enabletracing Sets or retrieves a VARIANT that indicates whether tracing is currently enabled. For more information about the trace facility in Microsoft Windows HTTP Services (WinHTTP), see WinHTTP Trace Facility.
+option_revertimpersonationoverssl Controls if the object temporarily reverts client impersonation for the duration of the SSL certificate authentication operations. The default is TRUE. Set this option to FALSE to keep impersonation while performing certificate authentication operation
+option_enablehttpstohttpredirects Controls whether or not WinHTTP allows redirects. By default, all redirects are automatically followed, except those that transfer from a secure (https) URL to an non-secure (http) URL. Set this option to TRUE to enable HTTPS to HTTP redirects.
+option_enablepassportauthentication Enables or disables support for Passport authentication. By default, automatic support for Passport authentication is disabled; set this option to TRUE to enable Passport authentication support.
+option_maxautomaticredirects Sets or retrieves the maximum number of redirects that WinHTTP follows; the default is 10. This limit prevents unauthorized sites from making the WinHTTP client stall following a large number of redirects.
+option_maxresponseheadersize Sets or retrieves a limit on the max size of the header of the server's response. This limit protects the client from a malicious server attempting to stall the client by sending a response with an infinite amount of header data. Default is 64 KB.
+option_maxresponsedrainsize Sets or retrieves a bound on the amount of data that will be drained from responses in order to reuse a connection. The default is 1 MB.
+option_enablehttp1_1 Sets or retrieves a boolean value that indicates whether HTTP/1.1 or HTTP/1.0 should be used. The default is TRUE, so that HTTP/1.1 is used by default.
+option_enablecertificaterevocationcheck Enables server certificate revocation checking during SSL negotiation. When the server presents a certificate, a check is performed to determine whether the certificate has been revoked by its issuer.
+proxysetting
+proxyserver
+proxybypasslist
+*abort Abort an asynchronous operation in progress
+*getallresponseheaders Get all HTTP response headers
+*getresponseheader Get HTTP response header
+*open Open HTTP connection
+*send Send HTTP request
+*setautologonpolicy Specify if credentials should be sent automatically
+*setclientcertificate Specify a client certificate
+*setcredentials Specify authentication credentials
+*setproxy Specify proxy configuration
+*setrequestheader Add HTTP request header
+*settimeouts Specify timeout settings (in milliseconds)
+*waitforresponse Wait for asynchronous send to complete, with optional timeout (in seconds)
+*responsestream_access 
+*responsetext_access 
+*status_access 
+*statustext_access 
+*onresponsestart Occurs when the response data starts to be received.
+*onerror Occurs when there is a run-time error in the application.
+*onresponsedataavailable Occurs when data is available from the response.
+*onresponsefinished Occurs when the response data is complete.
+*responsebody_access 
+*formdestroy 
+*releaseobjects 
+*option_useragentstring_access 
+*option_useragentstring_assign 
+*option_url_access 
+*option_url_assign 
+*option_urlcodepage_access 
+*option_urlcodepage_assign 
+*option_escapepercentinurl_access 
+*option_escapepercentinurl_assign 
+*option_sslerrorignoreflags_access 
+*option_sslerrorignoreflags_assign 
+*option_selectcertificate_access 
+*option_selectcertificate_assign 
+*option_enableredirects_access 
+*option_enableredirects_assign 
+*option_urlescapedisablequery_access 
+*option_urlescapedisablequery_assign 
+*option_secureprotocols_access 
+*option_secureprotocols_assign 
+*option_enabletracing_access 
+*option_enabletracing_assign 
+*option_revertimpersonationoverssl_access 
+*option_revertimpersonationoverssl_assign 
+*option_enablehttpstohttpredirects_access 
+*option_enablehttpstohttpredirects_assign 
+*option_enablepassportauthentication_access 
+*option_enablepassportauthentication_assign 
+*option_maxautomaticredirects_access 
+*option_maxautomaticredirects_assign 
+*option_maxresponseheadersize_access 
+*option_maxresponseheadersize_assign 
+*option_maxresponsedrainsize_access 
+*option_maxresponsedrainsize_assign 
+*option_enablehttp1_1_access 
+*option_enablehttp1_1_assign 
+*option_enablecertificaterevocationcheck_access 
+*option_enablecertificaterevocationcheck_assign 
+*option_urlescapedisable_access 
+*option_urlescapedisable_assign 
+*_justfname 
+*_formatbytesize 
+*urlencode 
+*urldecode 
+*rfc822todatetime 
+*htmltidy 
+*htmldecode 
+*urlconv 
+*_entitynumtochar 
+*getdomainfromurl 
+*htmlbeautify 
+</reserved3>
+		<reserved4/>
+		<reserved5/>
+		<reserved6>Pixels</reserved6>
+		<reserved7/>
+		<reserved8/>
+		<user/>
+	</record>
+	<record>
+		<platform>COMMENT</platform>
+		<uniqueid>RESERVED</uniqueid>
+		<timestamp>0</timestamp>
+		<class/>
+		<classloc/>
+		<baseclass/>
+		<objname>winhttp</objname>
+		<parent/>
+		<properties/>
+		<protected/>
+		<methods/>
+		<objcode/>
+		<ole/>
+		<ole2/>
+		<reserved1/>
+		<reserved2/>
+		<reserved3/>
+		<reserved4/>
+		<reserved5/>
+		<reserved6/>
+		<reserved7/>
+		<reserved8/>
+		<user/>
+	</record>
+</VFPData>

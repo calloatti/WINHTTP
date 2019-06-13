@@ -1,0 +1,482 @@
+<?xml version = "1.0" encoding="UTF-8" standalone="yes"?>
+<VFPData>
+	<record>
+		<platform>COMMENT</platform>
+		<uniqueid>Screen</uniqueid>
+		<timestamp>0</timestamp>
+		<class/>
+		<classloc/>
+		<baseclass/>
+		<objname/>
+		<parent/>
+		<properties/>
+		<protected/>
+		<methods/>
+		<objcode/>
+		<ole/>
+		<ole2/>
+		<reserved1>VERSION =   3.00</reserved1>
+		<reserved2/>
+		<reserved3/>
+		<reserved4/>
+		<reserved5/>
+		<reserved6/>
+		<reserved7/>
+		<reserved8/>
+		<user/>
+	</record>
+	<record>
+		<platform>WINDOWS</platform>
+		<uniqueid>_3Q2198GY4</uniqueid>
+		<timestamp>1113106633</timestamp>
+		<class>dataenvironment</class>
+		<classloc/>
+		<baseclass>dataenvironment</baseclass>
+		<objname>Dataenvironment</objname>
+		<parent/>
+		<properties>Top = 0
+Left = 0
+Width = 0
+Height = 0
+DataSource = .NULL.
+Name = "Dataenvironment"
+</properties>
+		<protected/>
+		<methods/>
+		<objcode/>
+		<ole/>
+		<ole2/>
+		<reserved1/>
+		<reserved2>1</reserved2>
+		<reserved3/>
+		<reserved4>2</reserved4>
+		<reserved5/>
+		<reserved6/>
+		<reserved7/>
+		<reserved8/>
+		<user/>
+	</record>
+	<record>
+		<platform>WINDOWS</platform>
+		<uniqueid>_3Q2198GY5</uniqueid>
+		<timestamp>1220494515</timestamp>
+		<class>form</class>
+		<classloc/>
+		<baseclass>form</baseclass>
+		<objname>Form1</objname>
+		<parent/>
+		<properties>DataSession = 2
+Height = 748
+Width = 592
+DoCreate = .T.
+AutoCenter = .T.
+Caption = "Form1"
+AllowOutput = .F.
+Name = "Form1"
+</properties>
+		<protected/>
+		<methods/>
+		<objcode/>
+		<ole/>
+		<ole2/>
+		<reserved1/>
+		<reserved2/>
+		<reserved3/>
+		<reserved4/>
+		<reserved5/>
+		<reserved6/>
+		<reserved7/>
+		<reserved8/>
+		<user/>
+	</record>
+	<record>
+		<platform>WINDOWS</platform>
+		<uniqueid>_3Q21CJ973</uniqueid>
+		<timestamp>1220494515</timestamp>
+		<class>image</class>
+		<classloc/>
+		<baseclass>image</baseclass>
+		<objname>Image1</objname>
+		<parent>Form1</parent>
+		<properties>Height = 720
+Left = 0
+Top = 0
+Width = 486
+Name = "Image1"
+</properties>
+		<protected/>
+		<methods/>
+		<objcode/>
+		<ole/>
+		<ole2/>
+		<reserved1/>
+		<reserved2/>
+		<reserved3/>
+		<reserved4/>
+		<reserved5/>
+		<reserved6/>
+		<reserved7/>
+		<reserved8/>
+		<user/>
+	</record>
+	<record>
+		<platform>WINDOWS</platform>
+		<uniqueid>_3Q2198GY4</uniqueid>
+		<timestamp>1191261173</timestamp>
+		<class>commandbutton</class>
+		<classloc/>
+		<baseclass>commandbutton</baseclass>
+		<objname>Command1</objname>
+		<parent>Form1</parent>
+		<properties>Top = 360
+Left = 492
+Height = 27
+Width = 84
+Caption = "winhttp POST"
+Name = "Command1"
+</properties>
+		<protected/>
+		<methods>PROCEDURE Click
+#Define IMAGE_SHACK_API_KEY "BXT1Z35V8f6ee0522939d8d7852dbe67b1eb9595"
+
+Local lcBoundary, lcFileData, lcFileName, lcImageUrl, lcPost, lcResponse, lcTargetUrl
+
+*Thisform.Winhttp1.SETPROXY(2, '127.0.0.1:8888', '')
+
+m.lcTargetUrl = 'http://iload2.imageshack.us/upload_api.php?swfupload=1&amp;cookie=&amp;optsize=resample&amp;ulevel=&amp;nocache=29632'
+
+m.lcFileData = Filetostr(Thisform.image1.Picture)
+m.lcFileName = Justfname(Thisform.image1.Picture)
+
+Thisform.Winhttp1.Open('POST', m.lcTargetUrl)
+
+m.lcBoundary = 'UPLOADERBOUNDARY'
+
+?Thisform.Winhttp1.setrequestheader('Accept', 'text/*')
+?Thisform.Winhttp1.setrequestheader('Content-Type', 'multipart/form-data; boundary=' + m.lcBoundary)
+?Thisform.Winhttp1.setrequestheader('User-Agent', 'ImageShack Uploader 2.2.0 (Windows)')
+?Thisform.Winhttp1.setrequestheader('Pragma', 'no-cache')
+?Thisform.Winhttp1.setrequestheader('Connection', 'Keep-Alive')
+
+m.lcPost = ''
+
+m.lcPost = m.lcPost + '--' + m.lcBoundary + 0h0d0a
+m.lcPost = m.lcPost + 'Content-Disposition: form-data; name="xml"' + 0h0d0a + 0h0d0a
+m.lcPost = m.lcPost + 'yes' + 0h0d0a
+m.lcPost = m.lcPost + '--' + m.lcBoundary + 0h0d0a
+
+m.lcPost = m.lcPost + 'Content-Disposition: form-data; name="public"' + 0h0d0a + 0h0d0a
+m.lcPost = m.lcPost + 'yes' + 0h0d0a
+m.lcPost = m.lcPost + '--' + m.lcBoundary + 0h0d0a
+
+m.lcPost = m.lcPost + 'Content-Disposition: form-data; name="key"' + 0h0d0a + 0h0d0a
+m.lcPost = m.lcPost + IMAGE_SHACK_API_KEY + 0h0d0a
+m.lcPost = m.lcPost + '--' + m.lcBoundary + 0h0d0a
+
+m.lcPost = m.lcPost + 'Content-Disposition: form-data; name="Filedata"; filename="' + m.lcFileName + '"' + 0h0d0a
+m.lcPost = m.lcPost + 'Content-Type: application/octet-stream' + 0h0d0a + 0h0d0a
+m.lcPost = m.lcPost + m.lcFileData + 0h0d0a
+m.lcPost = m.lcPost + '--' + m.lcBoundary + 0h0d0a
+
+_Cliptext = m.lcPost
+
+?'SEND', Thisform.Winhttp1.Send(m.lcPost)
+
+*!* GET RESPONSE TEXT
+
+m.lcResponse = Thisform.Winhttp1.responsetext
+
+m.lcImageUrl = Strextract(m.lcResponse, '&lt;image_link&gt;', '&lt;/image_link&gt;')
+
+
+?m.lcResponse
+?'--------------------------------------------------'
+?m.lcImageUrl
+
+_cliptext = m.lcResponse
+
+
+ENDPROC
+</methods>
+		<objcode/>
+		<ole/>
+		<ole2/>
+		<reserved1/>
+		<reserved2/>
+		<reserved3/>
+		<reserved4/>
+		<reserved5/>
+		<reserved6/>
+		<reserved7/>
+		<reserved8/>
+		<user/>
+	</record>
+	<record>
+		<platform>WINDOWS</platform>
+		<uniqueid>_3Q2198GY4</uniqueid>
+		<timestamp>1190961931</timestamp>
+		<class>winhttp</class>
+		<classloc>winhttp.vcx</classloc>
+		<baseclass>custom</baseclass>
+		<objname>Winhttp1</objname>
+		<parent>Form1</parent>
+		<properties>Top = 168
+Left = 516
+Name = "Winhttp1"
+</properties>
+		<protected/>
+		<methods/>
+		<objcode/>
+		<ole/>
+		<ole2/>
+		<reserved1/>
+		<reserved2/>
+		<reserved3/>
+		<reserved4/>
+		<reserved5/>
+		<reserved6/>
+		<reserved7/>
+		<reserved8/>
+		<user/>
+	</record>
+	<record>
+		<platform>WINDOWS</platform>
+		<uniqueid>_4EQ16XZ2R</uniqueid>
+		<timestamp>1190961931</timestamp>
+		<class>libcurl</class>
+		<classloc>..\libcurl\libcurl.vcx</classloc>
+		<baseclass>container</baseclass>
+		<objname>Libcurl</objname>
+		<parent>Form1</parent>
+		<properties>Anchor = 0
+Top = 432
+Left = 492
+Width = 84
+Height = 23
+TabIndex = 32
+ZOrderSet = 3
+curloptproxy = 
+Name = "Libcurl"
+LBLNAME.Name = "LBLNAME"
+</properties>
+		<protected/>
+		<methods>PROCEDURE transferprogress
+Lparameters pnBytesTotal, pnBytesDone, pnBytesLeft, pnSpeed, pnTimeTotal, pnTimeDone, pnTimeLeft
+
+Wait pnBytesDone Window Nowait
+
+Thisform.Draw()
+
+ENDPROC
+</methods>
+		<objcode/>
+		<ole/>
+		<ole2/>
+		<reserved1/>
+		<reserved2/>
+		<reserved3/>
+		<reserved4/>
+		<reserved5/>
+		<reserved6/>
+		<reserved7/>
+		<reserved8/>
+		<user/>
+	</record>
+	<record>
+		<platform>WINDOWS</platform>
+		<uniqueid>_3Q21CUIFR</uniqueid>
+		<timestamp>1190962262</timestamp>
+		<class>commandbutton</class>
+		<classloc/>
+		<baseclass>commandbutton</baseclass>
+		<objname>Command2</objname>
+		<parent>Form1</parent>
+		<properties>Top = 288
+Left = 492
+Height = 27
+Width = 84
+Caption = "Get options"
+Name = "Command2"
+</properties>
+		<protected/>
+		<methods>PROCEDURE Click
+
+Thisform.Winhttp1.Open("GET", "http://www.microsoft.com")
+Clear
+
+*!*	?"UserAgentString                 ", Thisform.Winhttp1.GetUserAgentString()
+*!*	?"URL                             ", Thisform.Winhttp1.GetURL()
+*!*	?"URLCodePage                     ", Transform(Thisform.Winhttp1.GetURLCodePage())
+*!*	?"EscapePercentInURL              ", Thisform.Winhttp1.GetEscapePercentInURL()
+*!*	?"SslErrorIgnoreFlags             ", Transform(Thisform.Winhttp1.GetSslErrorIgnoreFlags())
+*!*	?"EnableRedirects                 ", Thisform.Winhttp1.GetEnableRedirects()
+*!*	?"UrlEscapeDisable                ", Thisform.Winhttp1.GetUrlEscapeDisable()
+*!*	?"UrlEscapeDisableQuery           ", Thisform.Winhttp1.GetUrlEscapeDisableQuery()
+*!*	*?"SecureProtocols                 ", Thisform.Winhttp1.GetSecureProtocols()
+*!*	?"EnableTracing                   ", Thisform.Winhttp1.GetEnableTracing()
+*!*	?"RevertImpersonationOverSsl      ", Thisform.Winhttp1.GetRevertImpersonationOverSsl()
+*!*	?"EnableHttpsToHttpRedirects      ", Thisform.Winhttp1.GetEnableHttpsToHttpRedirects()
+*!*	?"EnablePassportAuthentication    ", Thisform.Winhttp1.GetEnablePassportAuthentication()
+*!*	?"MaxAutomaticRedirects           ", Transform(Thisform.Winhttp1.GetMaxAutomaticRedirects())
+*!*	?"MaxResponseHeaderSize           ", Transform(Thisform.Winhttp1.GetMaxResponseHeaderSize())
+*!*	?"MaxResponseDrainSize            ", Transform(Thisform.Winhttp1.GetMaxResponseDrainSize())
+*!*	?"EnableHttp1_1                   ", Thisform.Winhttp1.GetEnableHttp1_1()
+*!*	?"EnableCertificateRevocationCheck", Thisform.Winhttp1.GetEnableCertificateRevocationCheck()
+
+
+?'Option_EnableCertificateRevocationCheck', Thisform.winhttp1.Option_EnableCertificateRevocationCheck
+?'Option_EnableHttp1_1                   ', Thisform.winhttp1.Option_EnableHttp1_1
+?'Option_EnableHttpsToHttpRedirects      ', Thisform.winhttp1.Option_EnableHttpsToHttpRedirects
+?'Option_EnablePassportAuthentication    ', Thisform.winhttp1.Option_EnablePassportAuthentication
+?'Option_EnableRedirects                 ', Thisform.winhttp1.Option_EnableRedirects
+?'Option_EnableTracing                   ', Thisform.winhttp1.Option_EnableTracing
+?'Option_EscapePercentInURL              ', Thisform.winhttp1.Option_EscapePercentInURL
+?'Option_MaxAutomaticRedirects           ', Thisform.winhttp1.Option_MaxAutomaticRedirects
+?'Option_MaxResponseDrainSize            ', Thisform.winhttp1.Option_MaxResponseDrainSize
+?'Option_MaxResponseHeaderSize           ', Thisform.winhttp1.Option_MaxResponseHeaderSize
+?'Option_RevertImpersonationOverSsl      ', Thisform.winhttp1.Option_RevertImpersonationOverSsl
+?'Option_SecureProtocols                 ', Thisform.winhttp1.Option_SecureProtocols
+?'Option_SelectCertificate               ', Thisform.winhttp1.Option_SelectCertificate
+?'Option_SslErrorIgnoreFlags             ', Thisform.winhttp1.Option_SslErrorIgnoreFlags
+?'Option_URL                             ', Thisform.winhttp1.Option_URL
+?'Option_URLCodePage                     ', Thisform.winhttp1.Option_URLCodePage
+?'Option_UrlEscapeDisable                ', Thisform.winhttp1.Option_UrlEscapeDisable
+?'Option_UrlEscapeDisableQuery           ', Thisform.winhttp1.Option_UrlEscapeDisableQuery
+?'Option_UserAgentString                 ', Thisform.winhttp1.Option_UserAgentString
+
+ENDPROC
+</methods>
+		<objcode/>
+		<ole/>
+		<ole2/>
+		<reserved1/>
+		<reserved2/>
+		<reserved3/>
+		<reserved4/>
+		<reserved5/>
+		<reserved6/>
+		<reserved7/>
+		<reserved8/>
+		<user/>
+	</record>
+	<record>
+		<platform>WINDOWS</platform>
+		<uniqueid>_4EQ16X5MX</uniqueid>
+		<timestamp>1190961931</timestamp>
+		<class>commandbutton</class>
+		<classloc/>
+		<baseclass>commandbutton</baseclass>
+		<objname>Command3</objname>
+		<parent>Form1</parent>
+		<properties>Top = 228
+Left = 492
+Height = 27
+Width = 84
+Caption = "libcurl POST"
+Name = "Command3"
+</properties>
+		<protected/>
+		<methods>PROCEDURE Click
+*!* UploadImageShack
+
+#Define IMAGE_SHACK_API_KEY "BXT1Z35V8f6ee0522939d8d7852dbe67b1eb9595"
+
+Local lcBoundary, lcFileData, lcFileName, lcHeader, lcImageUrl, lcPost, lcResponse, lcTargetUrl
+Local pcFileData, pcFileName, pnHeight, pnWidth
+
+Thisform.LibCurl.curloptproxy = '127.0.0.1:8888'
+
+m.lcTargetUrl = 'http://iload2.imageshack.us/upload_api.php?swfupload=1&amp;cookie=&amp;optsize=resample&amp;ulevel=&amp;nocache=29632'
+
+m.lcFileData = Filetostr(Thisform.image1.Picture)
+m.lcFileName = Justfname(Thisform.image1.Picture)
+
+m.lcBoundary = 'UPLOADERBOUNDARY'
+
+*!* Create string of headers
+m.lcHeader = ;
+	'Accept: text/*' + '|' + ;
+	'Content-Type: multipart/form-data; boundary=' + m.lcBoundary + '|' + ;
+	'User-Agent: ImageShack Uploader 2.2.0 (Windows)' + '|' + ;
+	'Pragma: no-cache' + '|' + ;
+	'Connection: Keep-Alive'
+
+Thisform.LibCurl.CurlOptHttpHeader = m.lcHeader
+
+m.lcPost = ''
+
+m.lcPost = m.lcPost + '--' + m.lcBoundary + 0h0d0a
+m.lcPost = m.lcPost + 'Content-Disposition: form-data; name="xml"' + 0h0d0a + 0h0d0a
+m.lcPost = m.lcPost + 'yes' + 0h0d0a
+m.lcPost = m.lcPost + '--' + m.lcBoundary + 0h0d0a
+
+m.lcPost = m.lcPost + 'Content-Disposition: form-data; name="public"' + 0h0d0a + 0h0d0a
+m.lcPost = m.lcPost + 'yes' + 0h0d0a
+m.lcPost = m.lcPost + '--' + m.lcBoundary + 0h0d0a
+
+m.lcPost = m.lcPost + 'Content-Disposition: form-data; name="key"' + 0h0d0a + 0h0d0a
+m.lcPost = m.lcPost + IMAGE_SHACK_API_KEY + 0h0d0a
+m.lcPost = m.lcPost + '--' + m.lcBoundary + 0h0d0a
+
+m.lcPost = m.lcPost + 'Content-Disposition: form-data; name="Filedata"; filename="' + m.lcFileName + '"' + 0h0d0a
+m.lcPost = m.lcPost + 'Content-Type: application/octet-stream' + 0h0d0a + 0h0d0a
+m.lcPost = m.lcPost + m.lcFileData + 0h0d0a
+m.lcPost = m.lcPost + '--' + m.lcBoundary + 0h0d0a
+
+_Cliptext = m.lcPost
+
+m.lcResponse = Thisform.LibCurl.HttpPostString(m.lcTargetUrl, m.lcPost)
+
+m.lcImageUrl = Strextract(m.lcResponse, '&lt;image_link&gt;', '&lt;/image_link&gt;')
+
+Thisform.LibCurl.CurlOptHttpHeader = ''
+
+
+?m.lcImageUrl
+
+Return m.lcImageUrl
+
+
+
+ENDPROC
+</methods>
+		<objcode/>
+		<ole/>
+		<ole2/>
+		<reserved1/>
+		<reserved2/>
+		<reserved3/>
+		<reserved4/>
+		<reserved5/>
+		<reserved6/>
+		<reserved7/>
+		<reserved8/>
+		<user/>
+	</record>
+	<record>
+		<platform>COMMENT</platform>
+		<uniqueid>RESERVED</uniqueid>
+		<timestamp>0</timestamp>
+		<class/>
+		<classloc/>
+		<baseclass/>
+		<objname/>
+		<parent/>
+		<properties>Arial, 0, 9, 5, 15, 12, 32, 3, 0
+</properties>
+		<protected/>
+		<methods/>
+		<objcode/>
+		<ole/>
+		<ole2/>
+		<reserved1/>
+		<reserved2/>
+		<reserved3/>
+		<reserved4/>
+		<reserved5/>
+		<reserved6/>
+		<reserved7/>
+		<reserved8/>
+		<user/>
+	</record>
+</VFPData>

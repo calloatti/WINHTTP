@@ -1,0 +1,537 @@
+<?xml version = "1.0" encoding="UTF-8" standalone="yes"?>
+<VFPData>
+	<record>
+		<platform>COMMENT</platform>
+		<uniqueid>Screen</uniqueid>
+		<timestamp>0</timestamp>
+		<class/>
+		<classloc/>
+		<baseclass/>
+		<objname/>
+		<parent/>
+		<properties/>
+		<protected/>
+		<methods/>
+		<objcode/>
+		<ole/>
+		<ole2/>
+		<reserved1>VERSION =   3.00</reserved1>
+		<reserved2/>
+		<reserved3/>
+		<reserved4/>
+		<reserved5/>
+		<reserved6/>
+		<reserved7/>
+		<reserved8/>
+		<user/>
+	</record>
+	<record>
+		<platform>WINDOWS</platform>
+		<uniqueid>_3Q2198GY4</uniqueid>
+		<timestamp>1113106633</timestamp>
+		<class>dataenvironment</class>
+		<classloc/>
+		<baseclass>dataenvironment</baseclass>
+		<objname>Dataenvironment</objname>
+		<parent/>
+		<properties>Top = 0
+Left = 0
+Width = 0
+Height = 0
+DataSource = .NULL.
+Name = "Dataenvironment"
+</properties>
+		<protected/>
+		<methods/>
+		<objcode/>
+		<ole/>
+		<ole2/>
+		<reserved1/>
+		<reserved2>1</reserved2>
+		<reserved3/>
+		<reserved4>2</reserved4>
+		<reserved5/>
+		<reserved6/>
+		<reserved7/>
+		<reserved8/>
+		<user/>
+	</record>
+	<record>
+		<platform>WINDOWS</platform>
+		<uniqueid>_3Q2198GY5</uniqueid>
+		<timestamp>1191260762</timestamp>
+		<class>form</class>
+		<classloc/>
+		<baseclass>form</baseclass>
+		<objname>Form1</objname>
+		<parent/>
+		<properties>DataSession = 2
+Height = 570
+Width = 571
+DoCreate = .T.
+AutoCenter = .T.
+Caption = "Form1"
+AllowOutput = .F.
+Name = "Form1"
+</properties>
+		<protected/>
+		<methods/>
+		<objcode/>
+		<ole/>
+		<ole2/>
+		<reserved1/>
+		<reserved2/>
+		<reserved3/>
+		<reserved4/>
+		<reserved5/>
+		<reserved6/>
+		<reserved7/>
+		<reserved8/>
+		<user/>
+	</record>
+	<record>
+		<platform>WINDOWS</platform>
+		<uniqueid>_3Q21CJ973</uniqueid>
+		<timestamp>1113109766</timestamp>
+		<class>image</class>
+		<classloc/>
+		<baseclass>image</baseclass>
+		<objname>Image1</objname>
+		<parent>Form1</parent>
+		<properties>Stretch = 2
+Height = 570
+Left = 0
+Top = 0
+Width = 400
+Name = "Image1"
+</properties>
+		<protected/>
+		<methods/>
+		<objcode/>
+		<ole/>
+		<ole2/>
+		<reserved1/>
+		<reserved2/>
+		<reserved3/>
+		<reserved4/>
+		<reserved5/>
+		<reserved6/>
+		<reserved7/>
+		<reserved8/>
+		<user/>
+	</record>
+	<record>
+		<platform>WINDOWS</platform>
+		<uniqueid>_3Q2198GY4</uniqueid>
+		<timestamp>1191260762</timestamp>
+		<class>commandbutton</class>
+		<classloc/>
+		<baseclass>commandbutton</baseclass>
+		<objname>Command1</objname>
+		<parent>Form1</parent>
+		<properties>Top = 528
+Left = 408
+Height = 27
+Width = 144
+Caption = "GET"
+Name = "Command1"
+</properties>
+		<protected/>
+		<methods>PROCEDURE Click
+Clear
+
+Thisform.Image1.PictureVal = ''
+
+Thisform.Winhttp1.Open("GET", "http://img191.imageshack.us/img191/3096/03022.jpg", .T.)
+
+Thisform.Winhttp1.Send()
+
+
+ENDPROC
+</methods>
+		<objcode/>
+		<ole/>
+		<ole2/>
+		<reserved1/>
+		<reserved2/>
+		<reserved3/>
+		<reserved4/>
+		<reserved5/>
+		<reserved6/>
+		<reserved7/>
+		<reserved8/>
+		<user/>
+	</record>
+	<record>
+		<platform>WINDOWS</platform>
+		<uniqueid>_3Q2198GY4</uniqueid>
+		<timestamp>1190958372</timestamp>
+		<class>winhttp</class>
+		<classloc>winhttp.vcx</classloc>
+		<baseclass>custom</baseclass>
+		<objname>Winhttp1</objname>
+		<parent>Form1</parent>
+		<properties>Top = 204
+Left = 420
+Name = "Winhttp1"
+</properties>
+		<protected/>
+		<methods>PROCEDURE onerror
+Lparameters pErrorNumber, pErrorDescription
+
+?"OnError", m.pErrorNumber, m.pErrorDescription
+ENDPROC
+PROCEDURE onresponsedataavailable
+Lparameters pData
+
+?"OnResponseDataAvailable", LEN(m.pData)
+ENDPROC
+PROCEDURE onresponsefinished
+?"OnResponseFinished", Len(This.ResponseBody)
+
+Thisform.Image1.PictureVal = This.ResponseBody
+
+
+ENDPROC
+PROCEDURE onresponsestart
+Lparameters pStatus, pContentType
+
+?"OnResponseStart", m.pStatus, m.pContentType
+
+
+ENDPROC
+</methods>
+		<objcode/>
+		<ole/>
+		<ole2/>
+		<reserved1/>
+		<reserved2/>
+		<reserved3/>
+		<reserved4/>
+		<reserved5/>
+		<reserved6/>
+		<reserved7/>
+		<reserved8/>
+		<user/>
+	</record>
+	<record>
+		<platform>WINDOWS</platform>
+		<uniqueid>_3Q2198GY4</uniqueid>
+		<timestamp>1191260762</timestamp>
+		<class>commandbutton</class>
+		<classloc/>
+		<baseclass>commandbutton</baseclass>
+		<objname>Command2</objname>
+		<parent>Form1</parent>
+		<properties>Top = 252
+Left = 408
+Height = 27
+Width = 144
+Caption = "Get options"
+Name = "Command2"
+</properties>
+		<protected/>
+		<methods>PROCEDURE Click
+Thisform.Winhttp1.Open("GET", "http://www.microsoft.com")
+Clear
+
+*!*	?"UserAgentString                 ", Thisform.Winhttp1.GetUserAgentString()
+*!*	?"URL                             ", Thisform.Winhttp1.GetURL()
+*!*	?"URLCodePage                     ", Transform(Thisform.Winhttp1.GetURLCodePage())
+*!*	?"EscapePercentInURL              ", Thisform.Winhttp1.GetEscapePercentInURL()
+*!*	?"SslErrorIgnoreFlags             ", Transform(Thisform.Winhttp1.GetSslErrorIgnoreFlags())
+*!*	?"EnableRedirects                 ", Thisform.Winhttp1.GetEnableRedirects()
+*!*	?"UrlEscapeDisable                ", Thisform.Winhttp1.GetUrlEscapeDisable()
+*!*	?"UrlEscapeDisableQuery           ", Thisform.Winhttp1.GetUrlEscapeDisableQuery()
+*!*	*?"SecureProtocols                 ", Thisform.Winhttp1.GetSecureProtocols()
+*!*	?"EnableTracing                   ", Thisform.Winhttp1.GetEnableTracing()
+*!*	?"RevertImpersonationOverSsl      ", Thisform.Winhttp1.GetRevertImpersonationOverSsl()
+*!*	?"EnableHttpsToHttpRedirects      ", Thisform.Winhttp1.GetEnableHttpsToHttpRedirects()
+*!*	?"EnablePassportAuthentication    ", Thisform.Winhttp1.GetEnablePassportAuthentication()
+*!*	?"MaxAutomaticRedirects           ", Transform(Thisform.Winhttp1.GetMaxAutomaticRedirects())
+*!*	?"MaxResponseHeaderSize           ", Transform(Thisform.Winhttp1.GetMaxResponseHeaderSize())
+*!*	?"MaxResponseDrainSize            ", Transform(Thisform.Winhttp1.GetMaxResponseDrainSize())
+*!*	?"EnableHttp1_1                   ", Thisform.Winhttp1.GetEnableHttp1_1()
+*!*	?"EnableCertificateRevocationCheck", Thisform.Winhttp1.GetEnableCertificateRevocationCheck()
+
+
+?'Option_EnableCertificateRevocationCheck', Thisform.winhttp1.Option_EnableCertificateRevocationCheck
+?'Option_EnableHttp1_1                   ', Thisform.winhttp1.Option_EnableHttp1_1
+?'Option_EnableHttpsToHttpRedirects      ', Thisform.winhttp1.Option_EnableHttpsToHttpRedirects
+?'Option_EnablePassportAuthentication    ', Thisform.winhttp1.Option_EnablePassportAuthentication
+?'Option_EnableRedirects                 ', Thisform.winhttp1.Option_EnableRedirects
+?'Option_EnableTracing                   ', Thisform.winhttp1.Option_EnableTracing
+?'Option_EscapePercentInURL              ', Thisform.winhttp1.Option_EscapePercentInURL
+?'Option_MaxAutomaticRedirects           ', Thisform.winhttp1.Option_MaxAutomaticRedirects
+?'Option_MaxResponseDrainSize            ', Thisform.winhttp1.Option_MaxResponseDrainSize
+?'Option_MaxResponseHeaderSize           ', Thisform.winhttp1.Option_MaxResponseHeaderSize
+?'Option_RevertImpersonationOverSsl      ', Thisform.winhttp1.Option_RevertImpersonationOverSsl
+?'Option_SecureProtocols                 ', Thisform.winhttp1.Option_SecureProtocols
+?'Option_SelectCertificate               ', Thisform.winhttp1.Option_SelectCertificate
+?'Option_SslErrorIgnoreFlags             ', Thisform.winhttp1.Option_SslErrorIgnoreFlags
+?'Option_URL                             ', Thisform.winhttp1.Option_URL
+?'Option_URLCodePage                     ', Thisform.winhttp1.Option_URLCodePage
+?'Option_UrlEscapeDisable                ', Thisform.winhttp1.Option_UrlEscapeDisable
+?'Option_UrlEscapeDisableQuery           ', Thisform.winhttp1.Option_UrlEscapeDisableQuery
+?'Option_UserAgentString                 ', Thisform.winhttp1.Option_UserAgentString
+
+ENDPROC
+</methods>
+		<objcode/>
+		<ole/>
+		<ole2/>
+		<reserved1/>
+		<reserved2/>
+		<reserved3/>
+		<reserved4/>
+		<reserved5/>
+		<reserved6/>
+		<reserved7/>
+		<reserved8/>
+		<user/>
+	</record>
+	<record>
+		<platform>WINDOWS</platform>
+		<uniqueid>_3Q21EE82I</uniqueid>
+		<timestamp>1191260762</timestamp>
+		<class>commandbutton</class>
+		<classloc/>
+		<baseclass>commandbutton</baseclass>
+		<objname>Command3</objname>
+		<parent>Form1</parent>
+		<properties>Top = 492
+Left = 408
+Height = 27
+Width = 144
+Caption = "HEAD"
+Name = "Command3"
+</properties>
+		<protected/>
+		<methods>PROCEDURE Click
+Clear
+
+Thisform.Winhttp1.Open("HEAD", "http://img191.imageshack.us/img191/3096/03022.jpg")
+
+Thisform.Winhttp1.SetRequestHeader("Referer", "http://www.imdb.com")
+
+Thisform.Winhttp1.Send()
+
+?Thisform.Winhttp1.GetAllResponseHeaders()
+
+ENDPROC
+</methods>
+		<objcode/>
+		<ole/>
+		<ole2/>
+		<reserved1/>
+		<reserved2/>
+		<reserved3/>
+		<reserved4/>
+		<reserved5/>
+		<reserved6/>
+		<reserved7/>
+		<reserved8/>
+		<user/>
+	</record>
+	<record>
+		<platform>WINDOWS</platform>
+		<uniqueid>_3Q2198GY4</uniqueid>
+		<timestamp>1191260762</timestamp>
+		<class>commandbutton</class>
+		<classloc/>
+		<baseclass>commandbutton</baseclass>
+		<objname>Command4</objname>
+		<parent>Form1</parent>
+		<properties>Top = 288
+Left = 408
+Height = 27
+Width = 144
+Caption = "getallresponseheaders"
+Name = "Command4"
+</properties>
+		<protected/>
+		<methods>PROCEDURE Click
+?Thisform.Winhttp1.getallresponseheaders()
+
+ENDPROC
+</methods>
+		<objcode/>
+		<ole/>
+		<ole2/>
+		<reserved1/>
+		<reserved2/>
+		<reserved3/>
+		<reserved4/>
+		<reserved5/>
+		<reserved6/>
+		<reserved7/>
+		<reserved8/>
+		<user/>
+	</record>
+	<record>
+		<platform>WINDOWS</platform>
+		<uniqueid>_3Q2198GY4</uniqueid>
+		<timestamp>1191260762</timestamp>
+		<class>commandbutton</class>
+		<classloc/>
+		<baseclass>commandbutton</baseclass>
+		<objname>Command5</objname>
+		<parent>Form1</parent>
+		<properties>Top = 324
+Left = 408
+Height = 27
+Width = 144
+Caption = "responsebody"
+Name = "Command5"
+</properties>
+		<protected/>
+		<methods>PROCEDURE Click
+?Thisform.Winhttp1.responsebody
+
+ENDPROC
+</methods>
+		<objcode/>
+		<ole/>
+		<ole2/>
+		<reserved1/>
+		<reserved2/>
+		<reserved3/>
+		<reserved4/>
+		<reserved5/>
+		<reserved6/>
+		<reserved7/>
+		<reserved8/>
+		<user/>
+	</record>
+	<record>
+		<platform>WINDOWS</platform>
+		<uniqueid>_3Q2198GY4</uniqueid>
+		<timestamp>1191260762</timestamp>
+		<class>commandbutton</class>
+		<classloc/>
+		<baseclass>commandbutton</baseclass>
+		<objname>Command6</objname>
+		<parent>Form1</parent>
+		<properties>Top = 360
+Left = 408
+Height = 27
+Width = 144
+Caption = "responsetext"
+Name = "Command6"
+</properties>
+		<protected/>
+		<methods>PROCEDURE Click
+?Thisform.Winhttp1.responsetext
+
+ENDPROC
+</methods>
+		<objcode/>
+		<ole/>
+		<ole2/>
+		<reserved1/>
+		<reserved2/>
+		<reserved3/>
+		<reserved4/>
+		<reserved5/>
+		<reserved6/>
+		<reserved7/>
+		<reserved8/>
+		<user/>
+	</record>
+	<record>
+		<platform>WINDOWS</platform>
+		<uniqueid>_3Q2198GY4</uniqueid>
+		<timestamp>1191260762</timestamp>
+		<class>commandbutton</class>
+		<classloc/>
+		<baseclass>commandbutton</baseclass>
+		<objname>Command7</objname>
+		<parent>Form1</parent>
+		<properties>Top = 396
+Left = 408
+Height = 27
+Width = 144
+Caption = "status"
+Name = "Command7"
+</properties>
+		<protected/>
+		<methods>PROCEDURE Click
+?Thisform.Winhttp1.status
+
+ENDPROC
+</methods>
+		<objcode/>
+		<ole/>
+		<ole2/>
+		<reserved1/>
+		<reserved2/>
+		<reserved3/>
+		<reserved4/>
+		<reserved5/>
+		<reserved6/>
+		<reserved7/>
+		<reserved8/>
+		<user/>
+	</record>
+	<record>
+		<platform>WINDOWS</platform>
+		<uniqueid>_4EU0DJ712</uniqueid>
+		<timestamp>1191260762</timestamp>
+		<class>commandbutton</class>
+		<classloc/>
+		<baseclass>commandbutton</baseclass>
+		<objname>Command8</objname>
+		<parent>Form1</parent>
+		<properties>Top = 432
+Left = 408
+Height = 27
+Width = 144
+Caption = "statustext"
+Name = "Command8"
+</properties>
+		<protected/>
+		<methods>PROCEDURE Click
+?Thisform.Winhttp1.statustext
+
+ENDPROC
+</methods>
+		<objcode/>
+		<ole/>
+		<ole2/>
+		<reserved1/>
+		<reserved2/>
+		<reserved3/>
+		<reserved4/>
+		<reserved5/>
+		<reserved6/>
+		<reserved7/>
+		<reserved8/>
+		<user/>
+	</record>
+	<record>
+		<platform>COMMENT</platform>
+		<uniqueid>RESERVED</uniqueid>
+		<timestamp>0</timestamp>
+		<class/>
+		<classloc/>
+		<baseclass/>
+		<objname/>
+		<parent/>
+		<properties>Arial, 0, 9, 5, 15, 12, 32, 3, 0
+</properties>
+		<protected/>
+		<methods/>
+		<objcode/>
+		<ole/>
+		<ole2/>
+		<reserved1/>
+		<reserved2/>
+		<reserved3/>
+		<reserved4/>
+		<reserved5/>
+		<reserved6/>
+		<reserved7/>
+		<reserved8/>
+		<user/>
+	</record>
+</VFPData>
