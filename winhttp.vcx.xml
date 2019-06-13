@@ -28,7 +28,7 @@
 	<record>
 		<platform>WINDOWS</platform>
 		<uniqueid>_3Q2120WCX</uniqueid>
-		<timestamp>1254444838</timestamp>
+		<timestamp>1321636043</timestamp>
 		<class>custom</class>
 		<classloc/>
 		<baseclass>custom</baseclass>
@@ -64,6 +64,10 @@ option_enablecertificaterevocationcheck = .F.
 proxysetting = 0
 proxyserver = 
 proxybypasslist = 
+responsestatus = 0
+_memberdata = 
+responsestatustext = 
+gzip = .F.
 Name = "winhttp"
 </properties>
 		<protected/>
@@ -1230,6 +1234,24 @@ Return m.pwzResult
 
 
 ENDPROC
+PROCEDURE getresponse
+*!* getresponse
+
+*!* use when gzip = true to get the unzipped response
+
+If 'gzip' $ This.getresponseheader('Content-Encoding') Then
+
+	Return _zlibuncompressgzip(This.responsebody)
+
+Else
+
+	Return  This.responsetext
+
+Endif
+
+
+
+ENDPROC
 PROCEDURE getresponseheader
 *!* GETRESPONSEHEADER
 
@@ -2150,6 +2172,14 @@ Endtry
 Return m.result
 
 ENDPROC
+PROCEDURE responsestatus_access
+Return This.status
+
+ENDPROC
+PROCEDURE responsestatustext_access
+Return This.statustext
+
+ENDPROC
 PROCEDURE responsestream_access
 *!* The ResponseStream property retrieves the response entity body as an IStream.
 
@@ -2346,16 +2376,31 @@ Local result
 *!* CONVERT STRING TO BINARY TYPE
 
 If Vartype(m.pBody) $ 'CQ' Then
+
 	m.pBody = Createbinary(m.pBody)
+
 Else
+
 	m.pBody = Null
+
+Endif
+
+If This.gzip = .T. Then
+
+	This.setrequestheader('Accept-Encoding', 'gzip')
+
 Endif
 
 Try
+
 	This.WinHttpRequest.Send(m.pBody)
+
 	m.result = .T.
+
 Catch
+
 	m.result = .F.
+
 Endtry
 
 Return m.result
@@ -2895,6 +2940,8 @@ Return m.purl
 
 ENDPROC
 PROCEDURE urlencode
+*!* urlencode
+
 Lparameters purl
 
 Local cchar, curl, lnx
@@ -3045,6 +3092,10 @@ option_enablecertificaterevocationcheck Enables server certificate revocation ch
 proxysetting
 proxyserver
 proxybypasslist
+responsestatus
+_memberdata XML Metadata for customizable properties
+responsestatustext
+gzip Specifies if the request header 'Accept-Encoding'=gzip is set before Send.
 *abort Abort an asynchronous operation in progress
 *getallresponseheaders Get all HTTP response headers
 *getresponseheader Get HTTP response header
@@ -3117,6 +3168,9 @@ proxybypasslist
 *_entitynumtochar 
 *getdomainfromurl 
 *htmlbeautify 
+*responsestatus_access 
+*responsestatustext_access 
+*getresponse Use when setting gzip = true to get the unzipped response body.
 </reserved3>
 		<reserved4/>
 		<reserved5/>
